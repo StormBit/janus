@@ -7,7 +7,7 @@ use Carp 'cluck';
 use Scalar::Util 'weaken';
 
 # set only on released versions
-our $RELEASE = '1.10';
+our $RELEASE;
 
 =head1 Janus
 
