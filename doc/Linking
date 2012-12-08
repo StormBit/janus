@@ -1,0 +1,10 @@
+Linking modes:
+
+Janus supports two main linking modes. The normal (and default) mode is called
+"link" and links individual channels. This is suitable for sharing a few related
+channels between networks, without needing to share services, network opers, or
+other unrelated channels.
+
+The second mode is called "bridge" mode, and functions as a more transparent
+bridge, intended to be used between different ircds on the same logical network.
+Many of the commands and modules do not apply to this mode, and will not work.

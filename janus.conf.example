@@ -1,0 +1,286 @@
+# Janus configuration file
+#
+# This is a line-based configuation file, divided into blocks for networks
+# and other grouped settings.
+#
+# GENERAL RULE: If you don't know what it does then just leave it alone. 
+#               The default setting should work without any trouble.
+#               This however doesn't count for server blocks.
+#
+
+# Set block: settings for the janus server itself
+set {
+	# Server name - set this to a single unique word. This is used to identify
+	# the server in the interjanus protocol.
+	# This does NOT need to be a domain name; it should be short.
+	name yourserver
+
+	# Saved data location - this is the file which janus will load and save
+	# state (such as the list of shared channels) between runs
+	save janus.dat
+
+	# Janus nick - Change this if you want a different interface nick
+	# Janus ident - Change this if you want a different interface ident
+	# Janus name - Change this if you want a different interface real name
+	# Janus host (rhost) - Change this if you want a different interface host
+	# Janus vhost (host) - Change this if you want a different interface vhost
+	janus_nick janus
+	#janus_ident janus
+	#janus_name Janus Control Interface
+	#janus_rhost services.janus
+	#janus_host services
+	
+	# Interface Type - This changes how the Janus interface responds to
+	# commands sent to it. It can either respond by private message used with
+	# IRC Bots or the traditional notices that Services are supposed to use.
+	# Possible options:
+	#  notice - Sends Interface responses to the user as notices.
+	#  privmsg - Sends Interface responses to the user as private messages.
+	# Note: This defaults to privmsg
+	#janus_type privmsg
+
+	# Administrator password - if set, this enables an "admin" account with 
+	# full access to all commands. Once you have created normal accounts,
+	# this should be disabled as the password is stored in plaintext.
+	password verysecret
+
+	# Link mode - use janus as a network partition or a transparent bridge
+	#  link - network partition, channels must be explicitly linked
+	#  bridge - transpaent link, all channels linked, opers are more global
+	lmode link
+
+	# Global Linking Requirement - This is the minimum access level a user
+	# needs to be in a channel or on a network before Janus will allow them
+	# to create, destroy and link channels.
+	# Possible options:
+	#  owner - User needs to be atleast an owner of the channel to add/link it
+	#  op - User needs to be atleast an op on the channel to add/link it
+	#  oper - User needs to be atleast an oper on the network to add/link channels
+	# Note: This defaults to owner
+	#linkreq owner
+
+	# Custom Domain - This will make Janus use a custom domain for Janus links
+	# in /map and /links. Please exclude the first . from the domain name.
+	# It defaults to 'janus' that displays as net.janus in /map and /links.
+	# This works without problems in an InterJanus setup.
+	#laddy gigirc.com
+	
+	# Network Tag Separator - This is what Janus uses to seperate another network's
+	# (short) tag name from the user's nickname. 
+	# Example:
+	#   Trixar_za on the gig network with the septag of / would be Trixar_za/gig on
+	#   any other network present in the Janus linked Network.
+	# Note: This can be any character and defaults to / when not set or left empty.
+	# Note: This is used to avoid nickname collisions so don't use strange/unsupported
+	# characters here or you'll have serious desync problems.
+	#septag /
+
+	# Forced Network Tagging - This will force network tags for all users
+	# connected via janus to your network and may resolve common nickname
+	# collision issues.
+	# Note: Enabling tagall reverses how the forcetag command works. Forcetag will
+	# now disable tagging for the nickname you set it to while tagall is enabled.
+	#tagall 1
+
+	# Oper Visibity Level - Controls how oper statuses is shared across Janus linked
+	# networks. Leave this commented out or set it to 0 to keep opers in /lusers down.
+	# Note: This doesn't work with UnrealIRCd and I broke it intentionally... :P
+	# Note: This can be overridden on a per network basis via the oper_visibilty variable.
+	# 0 - Disables all Oper Status Sharing
+	# 1 - Adds +H (hide oper stats mode) to all Opers it shares
+	# 2 - Complete Oper Status Sharing without restrictions
+	#operlvl 0
+	
+	# Control Code Level - This controls the colour and IRC control codes between Janus
+	# linked Networks. Use this to strip unwanted colours, underlines or bold from shared
+	# user's text.
+	# Note: This defaults to 0 when not set
+	# 0 - Allows Colours, Bold and Underline
+	# 1 - Removes only Colours
+	# 2 - Removes all Colours, Bold and Underline
+	#cclvl 1
+
+	# Run mode - process execution style
+	#  mplex - Handle SSL and sockets using C; allows for perl process to be
+	#	transparently restarted if perl's memory allocation gets too large
+	#  uproc - Handle sockets internally to the worker process
+	# If "-daemon" is appended, janus will daemonize and optionally record its PID
+	# Note: If you don't know what the above means just leave the bottow two commented
+	# out to use the default setting.
+	#pidfile janus.pid
+	#runmode mplex-daemon
+
+	# Other parameters as defined by modules may be present here
+	# Example: Commands::Debug takes a date-based format for the dump files
+	datefmt %Y%m%d-%H%M%S
+
+	# SSL certificate. Only required if you are using an SSL server port,
+	# but will be presented as client certificates on connections
+	# These can be overridden in an individual link block
+	#ssl_certfile janus-cert.pem
+	#ssl_keyfile janus-key.pem
+	# Certificate Authority to verify certificates against - incoming and outgoing
+	#ssl_cafile janus-cert.pem
+}
+
+# Modules block: this is a list of modules which are loaded at startup.
+# Modules can also be loaded or unloaded while janus is running.
+# See README for a short description of each module.
+modules {
+	Commands::*
+	Modules::Ban
+	Modules::Claim
+	Modules::Global
+	Modules::Qline
+	Modules::Signals
+	Modules::Services
+	Modules::Spamfilter
+	Modules::WhoisFilter
+}
+
+# Log blocks
+log log/%Y%m%d.log {
+	# Type - a module in the Log package
+	# For "File" logs, the name is a strftime format string that will become the filename
+	type File
+
+	# Filter - what events to send to the log. Space-separated values
+	# See Log.pm for a full list; this will produce a reasonable log.
+	# Uncomment the filter to make a full log if you are submitting a bug report.
+	filter debug info warn err audit debug_in info_in warn_in err_in hook_err poison
+
+	## The following settings are specific to the File type:
+	# Run a dump before opening the log file (for possible replays)
+	dump 0
+	# rotate the log every N seconds
+	rotate 86400
+
+	# action to take on the log after closing
+	# closeact gzip
+}
+
+# Channel log: <netid>#channel
+log net#logchan {
+	type Channel
+	filter audit
+	style color
+}
+
+# Listen blocks: listen for incoming server connections
+#
+# No listen block is required if you have janus connect to your servers
+#
+# The type of server is determined by the IP of the incoming connection;
+# one port can be used for SSL and non-SSL, and for all types of servers.
+# You cannot accept incoming connections from a server if another server
+# shares its IP address; use outgoing connections or alternative IPs.
+listen 8005
+listen 127.0.0.1:8006
+
+# Network link block - one block is required per network
+# link <netid>
+# Note: It's recommended that netid be short (between 3-5 characters) since
+# they're used with network tags used with nicknames.
+link u3 {
+	# Server type. This is a module in the Server package
+	type Unreal
+
+	# Should we try to autoconnect to this network by default?
+	autoconnect 1
+
+	# Address to connect to. Will do a DNS lookup if needed
+	# Using DNS will disable incoming connections from this server
+	linkaddr ::1
+
+	# Port to connect to
+	linkport 8001
+
+	# Source address (optional, for multihomed hosts)
+	linkbind ::1
+
+	# Password which is sent
+	sendpass pass
+
+	# Password which is expected to receive
+	recvpass pass
+
+	# Link type: either plain or ssl. Also used for incoming connections.
+	linktype plain
+
+	# For SSL links, certificate fingerprint may be checked.
+	# See extras/get-fp to read the fingerprint of an existing server
+	# This is done instead of checking the CA
+	# ssl_fp da39a3ee5e6b4b0d3255bfef95601890afd80709
+
+	# Long name of this network
+	netname Test 1
+
+	# What server name is used to introduce ourselves
+	# Optional, defaults to NAME.janus where NAME is set above
+	linkname hub.janus
+
+	# Unreal-only: numerics used for janus servers. Optional, defaults to 100-600
+	numeric_range 40-45,70,85-190
+
+	# Untrusted: if set, don't send real IP/host to this network
+	# untrusted 1
+}
+
+# Link block for an InspIRCd server
+# (protocol details, module list, etc are autonegotiated on connect)
+link i1 {
+	type Inspircd
+	linkaddr 4.2.2.2
+	linkport 8003
+	linktype plain
+	sendpass pass
+	recvpass pass
+	netname Insp Server
+	autoconnect 1
+}
+
+# Other server protocols link the same way.
+# See the protocol module names in src/Server/
+link ts6 {
+	type TS6
+	ircd charybdis
+	linkaddr 4.2.2.2
+	linkport 1234
+	linktype plain
+	sendpass abc
+	recvpass def
+	netname TS6 Server
+}
+
+# Inter-janus link block
+# The link id must match the set::name of the remote server
+link myserver {
+	type InterJanus
+	linkaddr ::1
+	linkport 8009
+	linktype ssl
+	sendpass pass
+	recvpass ssap
+	netname That Other Server
+	autoconnect 0
+	ssl_certfile alt-server.cert.pem
+	ssl_keyfile alt-server.key.pem
+}
+
+# Relay bot link block
+link cbot {
+	type ClientBot
+	linkaddr 1.2.3.4
+	linkport 6667
+	# ClientBot supports 3 link types: ssl, plain, tls.
+	# tls requires the server to support STARTTLS
+	linktype tls
+	nick jmirror
+	# You can set the Real Name with this
+	name Janus IRC Bot
+	servpass ServerPassWord
+	nspass NickServPassWord
+	# the nick must already be registered, and the bot will not ghost anyone camping
+	netname A Relay Bot
+	autoconnect 1
+}
