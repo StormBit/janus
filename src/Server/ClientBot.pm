@@ -505,6 +505,7 @@ sub nicklen { 31 }
 				return "$type $dstr :<$nick> $msg";
 			}
 		}
+		();
 	},
 	KICK => sub {
 		my($net,$act) = @_;
