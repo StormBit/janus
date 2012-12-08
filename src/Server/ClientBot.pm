@@ -505,7 +505,6 @@ sub nicklen { 31 }
 				return "$type $dstr :<$nick> $msg";
 			}
 		}
-		();
 	},
 	KICK => sub {
 		my($net,$act) = @_;
@@ -542,7 +541,6 @@ sub nicklen { 31 }
 		my @modes = Modes::to_multi($net, \@mm, \@ma, \@md, $capabs[$$net]{MODES});
 		map $net->cmd1(MODE => $chan, @$_), @modes;
 	},
-	TOPIC => sub {
 	TOPIC => sub {
 		my ($net,$act) = @_;
 		$net->cmd1(TOPIC => $act->{dst}, $act->{topic});
