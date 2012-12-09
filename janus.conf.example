@@ -219,7 +219,7 @@ link u3 {
 	# Optional, defaults to NAME.janus where NAME is set above
 	linkname hub.janus
 
-	# Unreal-only: numerics used for janus servers. Optional, defaults to 100-600
+	# Unreal-only: numerics used for janus servers. Optional, defaults to 100-255
 	numeric_range 40-45,70,85-190
 
 	# Untrusted: if set, don't send real IP/host to this network
