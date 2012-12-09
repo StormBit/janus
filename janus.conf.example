@@ -212,8 +212,8 @@ link u3 {
 	# This is done instead of checking the CA
 	# ssl_fp da39a3ee5e6b4b0d3255bfef95601890afd80709
 
-	# Long name of this network
-	netname Test 1
+	# Long name of this network - this should match your IRCd's netname
+	netname TestNet
 
 	# What server name is used to introduce ourselves
 	# Optional, defaults to NAME.janus where NAME is set above
@@ -235,7 +235,7 @@ link i1 {
 	linktype plain
 	sendpass pass
 	recvpass pass
-	netname Insp Server
+	netname InspServ
 	autoconnect 1
 }
 
@@ -243,13 +243,12 @@ link i1 {
 # See the protocol module names in src/Server/
 link ts6 {
 	type TS6
-	ircd charybdis
 	linkaddr 4.2.2.2
 	linkport 1234
 	linktype plain
 	sendpass abc
 	recvpass def
-	netname TS6 Server
+	netname TS6
 }
 
 # Inter-janus link block
@@ -261,7 +260,7 @@ link myserver {
 	linktype ssl
 	sendpass pass
 	recvpass ssap
-	netname That Other Server
+	netname JLinkHub
 	autoconnect 0
 	ssl_certfile alt-server.cert.pem
 	ssl_keyfile alt-server.key.pem
@@ -281,6 +280,6 @@ link cbot {
 	servpass ServerPassWord
 	nspass NickServPassWord
 	# the nick must already be registered, and the bot will not ghost anyone camping
-	netname A Relay Bot
+	netname RelayBot
 	autoconnect 1
 }
