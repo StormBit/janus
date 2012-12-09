@@ -8,7 +8,7 @@ What changes did you make?
 
 In short? Most of the annoying messages have been disabled. The Controller bot and it's features have been made more configurable from the conf file. A few features like custom (branded) domain names for the Janus bots, forced network tagging, colour code stripping and oper sharing level have been added in. The conf file also have been modified a bit to give a better working example and several notes have been added in to avoid confusion.
 
-Note: There is now only ONE Inspircd file instead of three which works with 1.2+ and 2.0+. Please change your janus.conf to reflect this change!
+Notiable Changes: There is now only one Inspircd Server module and it works with InspIRCd 1.2+ and InspIRCd 2.0+. There is also only one TS6 Module for now, but you don't need to set an ircd in the conf anymore - it falls back on Charybdis features automatically. Please change your janus.conf to reflect these changes!
 
 How do I get a copy?
 --------------------
