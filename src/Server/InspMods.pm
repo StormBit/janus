@@ -17,7 +17,7 @@ sub mdef {
 		push @ver, $name;
 		$name = shift;
 	}
-	@ver = qw/1105 1200 1201/ unless @ver;
+	@ver = qw/1200 1201/ unless @ver;
 	@ver = map { $_ eq '12' ? qw/1200 1201/ : $_ } @ver;
 	if (@_ % 2) {
 		warn 'Odd argument count';
@@ -82,7 +82,6 @@ mdef 'm_auditorium.so', cmode => { u => 'r_auditorium' };
 mdef 'm_banexception.so', cmode => { e => 'l_except' };
 mdef 'm_banredirect.so'; # this just adds syntax to channel bans
 mdef 'm_blockamsg.so';
-mdef 1105, 'm_blockcaps.so', cmode => { P => 'r_blockcaps' };
 mdef 12, 'm_blockcaps.so', cmode => { B => 'r_blockcaps' };
 mdef 'm_blockcolor.so', cmode => { c => 't2_colorblock' };
 mdef 'm_botmode.so', umode => { B => 'bot' };
@@ -242,30 +241,6 @@ mdef 'm_muteban.so';
 mdef 'm_namesx.so';
 mdef 'm_nationalchars.so';
 mdef 'm_nickflood.so', cmode => { F => 's_nickflood' };
-mdef 1105, 'm_nicklock.so', cmds => {
-	NICKLOCK => sub {
-		my $net = shift;
-		my $nick = $net->nick($_[2]);
-		if ($nick->homenet() eq $net) {
-			return () if $_[2] eq $_[3];
-			# accept it as a nick change
-			return +{
-				type => 'NICK',
-				src => $nick,
-				dst => $nick,
-				nick => $_[3],
-				nickts => $Janus::time,
-			};
-		}
-		# we need to unlock and change nicks back
-		my @out;
-		push @out, $net->cmd2($Interface::janus, NICKUNLOCK => $_[3]);
-		push @out, $net->cmd2($_[3], NICK => $_[2]) unless $_[2] eq $_[3];
-		$net->send(@out);
-		();
-	},
-	NICKUNLOCK => \&ignore,
-};
 mdef 12, 'm_nicklock.so', cmds => {
 	NICKLOCK => sub {
 		my $net = shift;
@@ -338,19 +313,6 @@ mdef 'm_restrictmsg.so';
 mdef 'm_safelist.so';
 mdef 'm_sajoin.so', cmds => { 'SAJOIN' => \&ignore };
 mdef 'm_samode.so';
-mdef 1105, 'm_sanick.so', cmds => {
-	SANICK => sub {
-		my $net = shift;
-		my $nick = $net->nick($_[2]) or return ();
-		if ($nick->homenet() == $net) {
-			# BUG: this is misrouted, the NICK is already sent or will be soon
-			return ();
-		}
-		# reject
-		$net->send($net->cmd2($_[3], NICK => $_[2]));
-		();
-	},
-};
 mdef 12, 'm_sanick.so', cmds => {
 	SANICK => sub {
 		my $net = shift;
@@ -365,34 +327,10 @@ mdef 12, 'm_sanick.so', cmds => {
 	},
 };
 mdef 'm_sapart.so', cmds => { 'SAPART' => \&ignore };
-mdef 1105, 'm_saquit.so', cmds => { 'SAQUIT' => 'KILL' };
 mdef 12, 'm_saquit.so', cmds => { 'SAQUIT' => \&ignore };
 mdef 'm_securelist.so';
 mdef 'm_seenicks.so';
 mdef 'm_serverban.so';
-mdef 1105, 'm_services.so', cmode => {
-	r => 'r_',
-	R => 'r_reginvite',
-	M => 'r_regmoderated'
-}, umode => {
-	r => '',
-	R => 'deaf_regpriv',
-};
-mdef 1105, 'm_services_account.so', cmode => { R => 'r_reginvite', M => 'r_regmoderated' },
-	umode => { R => 'deaf_regpriv' },
-	metadata => {
-		accountname => sub {
-			my $net = shift;
-			my $nick = $net->mynick($_[2]) or return ();
-			return +{
-				type => 'NICKINFO',
-				dst => $nick,
-				item => 'svsaccount',
-				value => $_[4],
-			};
-		},
-	};
-
 mdef 12, 'm_services_account.so', cmode => {
 	r => 'r_',
 	R => 'r_reginvite',

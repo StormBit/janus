@@ -374,22 +374,13 @@ $moddef{CHARYBDIS} = {
 		q => 'l_quiet',
 		f => 's_forward',
 		j => 's_joinlimit',
-		F => 'r_', # can be +f target
-		L => 'r_', # large ban lists
 		P => 'r_permanent',
-		Q => 'r_', # ignore forwards
 		c => 'r_colorblock',
 		g => 'r_allinvite',
 		z => 'r_survey',
 	},
 	umode => {
 		Z => 'ssl',
-		Q => '',
-		R => '',
-		g => '',
-		l => '',
-		s => '',
-		z => '',
 	},
 	cmds => {
 		CHGHOST => sub {
@@ -450,10 +441,14 @@ $moddef{CORE} = {
   umode => {
 		D => 'deaf_chan',
 		S => 'service',
-		a => 'admin',
 		i => 'invisible',
-		o => 'oper',
 		w => 'wallops',
+  },
+  umode_in => {
+		o => \&Util::ModularNetwork::umode_o_in,
+  },
+  umode_out => {
+		oper => \&Util::ModularNetwork::umode_o_out,
   },
   cmds => {
 	ADMIN => \&ignore,
