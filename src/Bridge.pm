@@ -1,6 +1,6 @@
 # Copyright (C) 2007-2009 Daniel De Graaf
-# Released under the Affero General Public License
-# http://www.affero.org/oagpl.html
+# Modificiations (C) 2011 - 2012 Brenton Edgar Scott
+# Released under the GNU Affero General Public License v3
 package Bridge;
 use strict;
 use warnings;

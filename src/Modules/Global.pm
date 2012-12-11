@@ -1,4 +1,5 @@
 # Copyright (c) 2010 Samuel Hoffman
+# Modificiations (C) 2011 - 2012 Brenton Edgar Scott
 package Modules::Global;
 use strict;
 use warnings;
