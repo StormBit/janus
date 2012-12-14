@@ -20,7 +20,7 @@ sub module_add {
 	my $mod;
 	Event::named_hook('Server/find_module', $net, $name, \$mod);
 	unless ($mod) {
-		Log::err_in($net, "Unknown module $name, janus may become desynced if it is used") unless $opt;
+		#Log::err_in($net, "Unknown module $name, janus may become desynced if it is used") unless $opt;
 		$mod = {};
 	};
 	$modules[$$net]{$name} = $mod;
