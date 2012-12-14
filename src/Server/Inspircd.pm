@@ -111,13 +111,11 @@ sub dump_sendq {
 my @letters = ('A' .. 'Z', 0 .. 9);
 
 sub net2uid {
-	my $csid = '0AJ';
-	my $salt = 'J';
-	return $csid if @_ == 2 && $_[0] == $_[1];
+	return '0AJ' if @_ == 2 && $_[0] == $_[1];
 	my $srv = $_[-1];
 	my $snum = $$srv - 2;
-	return $csid if $snum <= 0; # Interface, RemoteJanus::self are #1,2
-	my $res = ($snum / 36) . $letters[$snum % 36] . $salt;
+	return '0AJ' if $snum <= 0; # Interface, RemoteJanus::self are #1,2
+	my $res = ($snum / 36) . $letters[$snum % 36] . 'J';
 	warn 'you have too many servers' if length $res > 3;
 		# maximum of 360. Can be increased if 'J' is modified too
 	$res;
