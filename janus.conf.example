@@ -236,6 +236,13 @@ link i1 {
 	sendpass pass
 	recvpass pass
 	netname InspServ
+	# With multiple Januses linked to InspIRCd networks,
+	# you may get SID in use errors. Change the bottom two
+	# values to combat that. The LAST letter in the SID MUST
+	# match the BASE letter. So if you use sid 5DZ, then base
+	# must be Z
+	#sid 0AJ
+	#base J
 	autoconnect 1
 }
 
@@ -249,6 +256,13 @@ link ts6 {
 	sendpass abc
 	recvpass def
 	netname TS6
+	# With multiple Januses linked to InspIRCd networks,
+	# you may get SID in use errors. Change the bottom two
+	# values to combat that. The LAST letter in the SID MUST
+	# match the BASE letter. So if you use sid 5DZ, then base
+	# must be Z
+	#sid 0AJ
+	#base J
 	autoconnect 1
 }
 
