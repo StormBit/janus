@@ -249,6 +249,7 @@ link ts6 {
 	sendpass abc
 	recvpass def
 	netname TS6
+	autoconnect 1
 }
 
 # Inter-janus link block
@@ -262,8 +263,8 @@ link myserver {
 	recvpass ssap
 	netname JLinkHub
 	autoconnect 0
-	ssl_certfile alt-server.cert.pem
-	ssl_keyfile alt-server.key.pem
+	#ssl_certfile alt-server.cert.pem
+	#ssl_keyfile alt-server.key.pem
 }
 
 # Relay bot link block
@@ -273,7 +274,7 @@ link cbot {
 	linkport 6667
 	# ClientBot supports 3 link types: ssl, plain, tls.
 	# tls requires the server to support STARTTLS
-	linktype tls
+	linktype plain
 	nick jmirror
 	# You can set the Real Name with this
 	name Janus IRC Bot

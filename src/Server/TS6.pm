@@ -143,7 +143,7 @@ sub dump_sendq {
 	$q;
 }
 
-my @letters = ('A' .. 'Z', 0 .. 9);
+my @letters = ('B' .. 'Z', 0 .. 9);
 
 sub net2uid {
 	return '0AJ' if @_ == 2 && $_[0] == $_[1];
