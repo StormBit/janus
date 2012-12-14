@@ -146,9 +146,8 @@ sub dump_sendq {
 my @letters = ('A' .. 'Z', 0 .. 9);
 
 sub net2uid {
-	my $net = shift;
-	my $csid = $net->cparam('sid') || '0AJ';
-	my $salt = $net->cparam('base') || 'J';
+	my $csid = '0AJ';
+	my $salt = 'J';
 	return $csid if @_ == 2 && $_[0] == $_[1];
 	my $srv = $_[-1];
 	my $snum = $$srv - 2;
