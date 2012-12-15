@@ -146,7 +146,7 @@ Event::hook_add(
 		my $schan = $act->{chan};
 		my $snet = $schan->homenet();
 		my $snetn = $snet->name;
-		my $sname = $schan->str($snet);
+		my $sname = $schan->lstr($snet);
 		my $dnet = $act->{dst};
 		my $dnetn = $dnet->name;
 		my $dname = $act->{dlink};
@@ -208,7 +208,7 @@ Event::hook_add(
 	}, LINKOFFER => act => sub {
 		my $act = shift;
 		my $net = $act->{src};
-		my $name = lc $act->{name};
+		my $name = $act->{name};
 		my %req = (
 			mode => 1,
 			mask => $act->{reqby},
@@ -216,7 +216,7 @@ Event::hook_add(
 		);
 		my $defacl = Setting::get(link_acl => $net);
 		for (split /,/, $defacl) {
-			my $m = s/([-+])// ? $1 eq '+' : 0;
+			my $m = s/-// ? 2 : s/\+// ? 1 : 2;
 			($_ ? $req{ack}{$_} : $req{mode}) = $m;
 		}
 		if ($act->{remove}) {
@@ -233,7 +233,8 @@ Event::hook_add(
 		my $net = $act->{net};
 		my $nname = $net->name();
 		my $chan = $act->{dst};
-		my $cname = $chan->str($net);
+		my $chan2 = $act->{split};
+		my $cname = $chan2 ? $chan2->lstr($net) : $chan->lstr($net);
 		my $hnet = $chan->homenet();
 		my $cause = $act->{cause};
 		if ($cause eq 'destroy') {
