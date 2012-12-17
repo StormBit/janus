@@ -348,6 +348,11 @@ Event::setting_add({
 	type => __PACKAGE__,
 	help => 'Automatically rejoin channel when kicked (0|1)',
 	default => 1,
+}, {
+	name => 'cb_showevents',
+	type => __PACKAGE__,
+	help => 'Relay Join/Part/Quit/Nick events to ClientBot network (disable for busy nets) (0|1)',
+	default => 1,
 });
 
 sub dump_sendq {
@@ -410,7 +415,7 @@ sub nicklen { 31 }
 			$net->add_halfout([ 10, "JOIN $chan", 'JOIN', $chan ]);
 			();
 		} else {
-			#return () unless $dst->get_mode('cb_showjoin');
+			return () unless Setting::get(cb_showevents => $net);
 			return () if $Janus::Burst;
 			my $id = $src->str($net).' ('.$src->info('ident').'@'.$src->info('vhost').')';
 			my $chan = $dst->str($net);
@@ -452,7 +457,7 @@ sub nicklen { 31 }
 			my $chan = $dst->str($net);
 			"PART $chan :$act->{msg}";
 		} else {
-			#return () unless $dst->get_mode('cb_showjoin');
+			return () unless Setting::get(cb_showevents => $net);
 			return () if $Janus::Burst;
 			$net->cmd1(PRIVMSG => $dst, $src->str($net).' has Left '.$dst->str($net).' ('.$act->{msg}.')');
 		}
@@ -462,7 +467,7 @@ sub nicklen { 31 }
 		my $nick = $act->{dst};
 		my @out;
 		for my $chan ($nick->all_chans()) {
-			#next unless $chan->is_on($net) && $chan->get_mode('cb_showjoin');
+			next unless  Setting::get(cb_showevents => $net);
 			next if $Janus::Burst;
 			push @out, $net->cmd1(PRIVMSG => $chan, $nick->str($net).' has Quit ('.$act->{msg}.')');
 		}
@@ -474,7 +479,8 @@ sub nicklen { 31 }
 		my @out;
 		my $msg = $act->{from}->{$$net}.' is now known as '.$act->{to}->{$$net};
 		for my $chan ($nick->all_chans()) {
-			next unless $chan->is_on($net);
+			next unless  Setting::get(cb_showevents => $net);
+			next if $Janus::Burst;
 			push @out, $net->cmd1(PRIVMSG => $chan, $msg);
 		}
 		@out;
