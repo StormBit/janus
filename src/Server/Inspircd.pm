@@ -766,6 +766,7 @@ $moddef{CORE} = {
 			msg => 'ERROR: '.$_[-1],
 		};
 	},
+	MOTD => \&ignore,
 	VERSION => \&ignore,
 	ADDLINE => sub {
 		my $net = shift;
