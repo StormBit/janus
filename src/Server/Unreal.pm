@@ -1133,6 +1133,7 @@ $moddef{CORE} = {
 	KNOCK => \&todo,
 
 # Server actions
+	__PANGPANG__ => \&ignore,
 	SERVER => sub {
 		my $net = shift;
 		# :src SERVER name hopcount [numeric] description

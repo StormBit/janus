@@ -28,7 +28,7 @@ Event::command_add({
 			'-',
 			'The original Janus was developed by Daniel de Graaf (danieldg) and later improved by',
 			'Samuel J Hoffman (miniCruzer). The current version this network is using has been',
-			'is currently developed by Brenton Edgar Scott (Trixar_za).',
+			'inproved and developed by Brenton Edgar Scott (Trixar_za).',
 			'If you wish to can grab your own copy of Janus or make any suggestions/bug reports,',
 			'please visit https://github.com/trixarian/janus to do so.',
 			'-',
