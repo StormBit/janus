@@ -20,10 +20,10 @@ You can however also download a copy from https://github.com/Trixarian/janus/arc
 Quick start:
 ------------
 
-Run `./configure` to check module dependencies and compile multiplex.
+Run `./configure` to check module dependencies and compile multiplex.  
 If you get ssl-gnutls errors then run `./configure nossl` instead.
 
-See the example configuration for a description of what is needed there.
+See the example configuration for a description of what is needed there.  
 After editing the configuration start janus by running `./janus.pl`
 
 Note: Look in the /doc directory for more help regarding Janus and it's parts.

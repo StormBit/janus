@@ -28,9 +28,12 @@ Event::command_add({
 			'-',
 			'The original Janus was developed by Daniel de Graaf (danieldg) and later improved by',
 			'Samuel J Hoffman (miniCruzer). The current version this network is using has been',
-			'enhanced and is currently developed by Brenton Edgar Scott (Trixar_za).',
+			'is currently developed by Brenton Edgar Scott (Trixar_za).',
 			'If you wish to can grab your own copy of Janus or make any suggestions/bug reports,',
-			'please visit https://github.com/trixarian/janus/ to do so.',
+			'please visit https://github.com/trixarian/janus to do so.',
+			'-',
+			'Contributors: Matthew Barksdale (mattwb65), Russel M Brandford (RussellB28),',
+			'neersighted, Alex Wilson (antoligy)',			
 		);
 	}
 }, {

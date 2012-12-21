@@ -767,6 +767,7 @@ $moddef{CORE} = {
 		};
 	},
 	MOTD => \&ignore,
+	KNOCK => \&ignore,
 	VERSION => \&ignore,
 	ADDLINE => sub {
 		my $net = shift;
