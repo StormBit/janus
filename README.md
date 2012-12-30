@@ -13,9 +13,9 @@ Notiable Changes: There is only one InspIRCd module and one TS6 module. This was
 How do I get a copy?
 --------------------
 
-The recommended way is to use `git clone git://github.com/Trixarian/janus.git` to create a copy on your server. Using this method will give you access to the up-git command and make all future upgrades easier.
+The recommended way is to use `git clone git://github.com/Trixarian/janus.git` to create a copy on your server. Using this method will give you access to the `up-git` command and make all future upgrades easier.
 
-You can however also download a copy from https://github.com/Trixarian/janus/archive/master.tar.gz and try using up-tar to upgrade it, but it's not as effective as the up-git way.
+You can however also download a copy from https://github.com/Trixarian/janus/archive/master.tar.gz and try using `up-tar` to upgrade it, but it's not as effective as the `up-git` way.
 
 Quick start:
 ------------
