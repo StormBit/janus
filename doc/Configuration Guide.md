@@ -5,7 +5,7 @@ Janus will not start without a properly configured janus.conf in its root direct
 
 
 Set Block
-=========
+---------
 The set block contains unique information about your Janus service:
 
 name: Your Janus's "name" in a InterJanus network. This should be short and not a domain name.  
@@ -19,49 +19,50 @@ janus_host: The vHost used by the Janus Bot. (Default: services)
 janus_rhost: The interface host used by the Janus Bot. (Default: service.janus)
 
 janus_type: The interface response type used by the Janus Bot. (Default: privmsg)  
-    * notice: Sends Interface responses to the user as notices.  
-    * privmsg: Sends Interface responses to the user as private messages.
+- notice: Sends Interface responses to the user as notices.  
+- privmsg: Sends Interface responses to the user as private messages.
 
 password: The password the admin account will have. You will identify as IDENTIFY <password>, where "password" is set here.
 
 lmode: This is how Janus will treat linking. Valid parameters include link and bridge. (Default: link)  
-    * link: The traditional method of linking; links only specific channels.  
-    * bridge: Will link all channels between servers, making opers more global. You should use 1 set of services here!
+- link: The traditional method of linking; links only specific channels.  
+- bridge: Will link all channels between servers, making opers more global. You should use 1 set of services here!
 
 linkreq: This is the minimum access level required to create, link and destroy channels with Janus. (Default: owner)  
-    * owner: User needs to be atleast an owner of the channel to add/link it  
-    * op: User needs to be atleast an op on the channel to add/link it  
-    * oper: User needs to be atleast an oper on the network to add/link channels
+- owner: User needs to be atleast an owner of the channel to add/link it  
+- op: User needs to be atleast an op on the channel to add/link it  
+- oper: User needs to be atleast an oper on the network to add/link channels
 
 laddy: Defines the domain name used by Janus in /links and /map when linked. (Default: janus)
 
 septag: Defines the seperatator used between a user's nick and the network tag. (Default: /)
 
 tagall: If enabled, this will force Janus to tag all nicknames from other networks with network tags. (Default: 0)  
-    * 0: Disables Forced Network Tagging  
-    * 1: Enables Forced Network Tagging
+- 0: Disables Forced Network Tagging  
+- 1: Enables Forced Network Tagging
 
 operlvl: Controls how Janus shares opers between Janus Linked networks. (Default: 0)  
-    * 0: Disables all Oper Status Sharing  
-    * 1: Adds +H (hide oper stats mode) to all Opers it shares  
-    * 2: Complete Oper Status Sharing without restrictions
+- 0: Disables all Oper Status Sharing  
+- 1: Adds +H (hide oper stats mode) to all Opers it shares  
+- 2: Complete Oper Status Sharing without restrictions
 
 cclvl: Controls how Janus forwards Channel messages with mIRC control codes in them. (Default: 1)
-    * 0: Allows Colours, Bold and Underline
-    * 1: Removes only Colours
-    * 2: Removes all Colours, Bold and Underline
+- 0: Allows Colours, Bold and Underline
+- 1: Removes only Colours
+- 2: Removes all Colours, Bold and Underline
 
 pidfile: Janus will create this file with its running PID.
 
 datefmt: Defines logging style.
 
 runmode: mplex(-daemon) or uproc(-daemon). (Default: mplex)  
-    * mplex: Multiplex support. Running './configure' will tell you if Multiplex is supported. This is recommended.  
-    * uproc: Used if Multiplex is not available  
-    * -daemon: Daemonize the process
+- mplex: Multiplex support. Running './configure' will tell you if Multiplex is supported. This is recommended.  
+- uproc: Used if Multiplex is not available  
+- -daemon: Daemonize the process
 
 
-Below is an example of the minimum required settings that NEED to be set for Janus to work:  
+Below is an example of the minimum required settings that NEED to be set for Janus to work:
+
 	set {
 		name yourserver
 		save janus.dat
@@ -75,9 +76,11 @@ Modules Block
 
 Modules allow Janus to function. Without many of these modules, you will have a misconfigured or malfunctional Janus Client. Anything prefixed with Modules:: is optional. We've configured with some recommended ones.
 
-"::" indicates folder in relation to the src/ folder. For example, Modules::Ban points to src/Modules/Ban.pm. "*" indicates all files in the directory ending with ".pm". Commands::* will load all modules in src/Commands/.
+`::` indicates folder in relation to the src/ folder. For example, `Modules::Ban` points to `src/Modules/Ban.pm`.  
+`*` indicates all files in the directory ending with `.pm`. `Commands::*` will load all modules in `src/Commands`.
 
-Example Module block shown below with all available modules:  
+Example Module block shown below with all available modules:
+
     modules {
         Commands::*
         Modules::Ban
@@ -169,6 +172,7 @@ Janus logs all events it sees, including errors, commands, and simple connection
 `log Hub#Services {` will log to #Services on the Hub network. The second parameter ("Hub") is the shortname for the network's channel to log to. This is defined in a link block, later on in the configuration.
 
 Example Log Blocks below:  
+
     log log/%Y%m%d.log {
         type File
         filter debug info warn err audit debug_in info_in warn_in err_in hook_err poison

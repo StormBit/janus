@@ -19,8 +19,7 @@ To protect your channel so other networks cannot modify permissions, first find 
 
 Now, look at the first line it displays. The bolded network, or first listed network, is your current network.
 
-Example:  
-`Linked Networks:	'''fn'''		rtn xr zn`  
+Example:  Linked Networks:	**fn**		rtn xr zn  
 
 The above displays `/msg Janus Linked` indicating "fn" being the current network.
 
