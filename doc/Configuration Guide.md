@@ -312,6 +312,7 @@ ClientBot Link Block
 InterJanus Link Block
 ---------------------
 Note: This link id must match the set::name of the Janus server your linking yours to!
+
     link myserver {
         type InterJanus
         linkaddr 1.2.3.4
