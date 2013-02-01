@@ -34,7 +34,7 @@ Linking into Channels
 
 After introducing your channel, now it is time to link your channel into other networks. Depending on the network, prior permission may need to be granted. First, find out the other network's server address - it is required to log into the other network to do this.
 
-Now join the channel you want to link your channel into. If I had #Generic on "fn", and I wanted it to be named "#Generic" on "zz", I log into "zz"'s servers, and '/join #Generic` and then possibly registering it. Registration of both channels aren't required, but is generally suggested for the network that's sharing it. The linking network doesn't have to have the channel registered.
+Now join the channel you want to link your channel into. If I had #Generic on "fn", and I wanted it to be named "#Generic" on "zz", I log into "zz"'s servers, and `/join #Generic` and then possibly registering it. Registration of both channels aren't required, but is generally suggested for the network that's sharing it. The linking network doesn't have to have the channel registered.
 
 Now that you are in the other network's servers, privage message Janus, and link the channel:  
 `/msg Janus link <#channel name> <Home Network>`
