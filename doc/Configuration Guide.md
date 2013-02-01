@@ -26,7 +26,8 @@ runmode: mplex(-daemon) or uproc(-daemon).
 	uproc: Used if Multiplex is not available  
 	-daemon: Daemonize the process
 
-Below is an example of the minimum required settings that NEED to be set for Janus to work:  
+Below is an example of the minimum required settings that NEED to be set for Janus to work:
+
 	set {
 		name yourserver
 		save janus.dat
@@ -129,9 +130,9 @@ Log Block
 
 Janus logs all events it sees, including errors, commands, and simple connections. The log block defines where it will store and write this information. Logging is supported to a channel, and to files.
 
-log log/janus-%m-%d.log { is an example of logging to a file. The second parameter (log/janus-%m-%d.log) indicates which folder to save the information to, in relation to the root directory. If your root directory is janus/, it will be stored in janus/log. %m is a variable for month, while %d is a variable for the day.
+`log log/janus-%m-%d.log {` is an example of logging to a file. The second parameter (`log/janus-%m-%d.log`) indicates which folder to save the information to, in relation to the root directory. If your root directory is janus/, it will be stored in janus/log. `%m` is a variable for month, while `%d` is a variable for the day.
 
-log Hub#Services { will log to #Services on the Hub network. The second parameter ("Hub") is the shortname for the network's channel to log to. This is defined in a link block, later on in the configuration.
+`log Hub#Services {` will log to #Services on the Hub network. The second parameter ("Hub") is the shortname for the network's channel to log to. This is defined in a link block, later on in the configuration.
 
 Example Log Blocks below:
 
@@ -155,6 +156,7 @@ Listen Block
 Similar to UnrealIRCd's listen block, this defines which IP and port to bind to. Multiple listen blocks may be defined at once. If that is so, Janus will take precedent to the first IP it has bound to when linking to networks.
 
 Listen Blocks Examples:
+
 	listen *:8005 # Can be used if there is only one ip available on the machine
 	listen 0.0.0.0:8005 # Can be used if there are one or more ip's available on the machine
 
