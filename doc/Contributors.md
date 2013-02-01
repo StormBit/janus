@@ -1,5 +1,6 @@
 People that made this version possible:
-=======================================
+---------------------------------------
+
 Original: Daniel De Graaf (danieldg)
           Samuel J Hoffman (miniCruzer)
 
@@ -10,4 +11,4 @@ Trix-Janus: neersighted *
 Current: Alex Wilson (antoligy)
 Documentation: Joe Gray (D3M0N)
 
-* People who's name I couldn't find
+\* People who's name I couldn't find
