@@ -417,6 +417,7 @@ sub nicklen { 31 }
 		} else {
 			return () unless Setting::get(cb_showevents => $net);
 			return () if $Janus::Burst;
+			return () if $act->{netsplit_quit};
 			my $id = $src->str($net).' ('.$src->info('ident').'@'.$src->info('vhost').')';
 			my $chan = $dst->str($net);
 			$net->cmd1(PRIVMSG => $dst, "Join: $id");
@@ -459,6 +460,7 @@ sub nicklen { 31 }
 		} else {
 			return () unless Setting::get(cb_showevents => $net);
 			return () if $Janus::Burst;
+			return () if $act->{netsplit_quit};
 			$net->cmd1(PRIVMSG => $dst, $src->str($net).' has Left '.$dst->str($net).' ('.$act->{msg}.')');
 		}
 	},
@@ -467,8 +469,9 @@ sub nicklen { 31 }
 		my $nick = $act->{dst};
 		my @out;
 		for my $chan ($nick->all_chans()) {
-			next unless  Setting::get(cb_showevents => $net);
+			next unless Setting::get(cb_showevents => $net);
 			next if $Janus::Burst;
+			next if $act->{netsplit_quit};
 			push @out, $net->cmd1(PRIVMSG => $chan, $nick->str($net).' has Quit ('.$act->{msg}.')');
 		}
 		@out;
@@ -481,6 +484,7 @@ sub nicklen { 31 }
 		for my $chan ($nick->all_chans()) {
 			next unless  Setting::get(cb_showevents => $net);
 			next if $Janus::Burst;
+			next if $act->{netsplit_quit};
 			push @out, $net->cmd1(PRIVMSG => $chan, $msg);
 		}
 		@out;

@@ -1,7 +1,7 @@
 What is this?
 -------------
 
-This is a fork of the Sourceforge version of Janus IRC Linker by Daniel De Graaf with the Trix-Janus Mods. I've done this because the older code lacks some of the bugs introduced in the Github version. I've stopped updating trix-janus, so use this one instead ;)
+This is a fork of the Sourceforge version of Janus by Daniel De Graaf with the Trix-Janus Mods. I've done this because the older code lacks some of the bugs introduced in the Github version. I've stopped updating trix-janus, so use this one instead ;)
 
 What changes did you make?
 --------------------------

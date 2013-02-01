@@ -81,7 +81,7 @@ Event::hook_add(
 			net => $network,
 		});
 
-		my $inick = $Conffile::netconf{set}{janus_nick} || 'janus';
+		my $inick = $Conffile::netconf{set}{janus_nick} || 'Janus';
 
 		$janus = Nick->new(
 			net => $network,
