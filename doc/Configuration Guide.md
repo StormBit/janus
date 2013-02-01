@@ -27,11 +27,11 @@ runmode: mplex(-daemon) or uproc(-daemon).
 	-daemon: Daemonize the process
 
 Below is an example of the minimum required settings that NEED to be set for Janus to work:  
-    set {
-        name yourserver
-        save janus.dat
-        password verysecret
-    }
+	set {
+		name yourserver
+		save janus.dat
+		password verysecret
+	}
 
 
 Modules Block
@@ -155,8 +155,8 @@ Listen Block
 Similar to UnrealIRCd's listen block, this defines which IP and port to bind to. Multiple listen blocks may be defined at once. If that is so, Janus will take precedent to the first IP it has bound to when linking to networks.
 
 Listen Blocks Examples:
-listen *:8005 - Can be used if there is only one ip available on the machine
-listen 0.0.0.0:8005 - Can be used if there are one or more ip's available on the machine
+	listen *:8005 # Can be used if there is only one ip available on the machine
+	listen 0.0.0.0:8005 # Can be used if there are one or more ip's available on the machine
 
 
 Link Block
@@ -164,28 +164,28 @@ Link Block
 
 You must have one link block for each network. This is how Janus links to your IRCd. Two link blocks are required for a functioning Janus. Any less and its just wasted space.
 
-link <name>: This is the unique identifier for the network. It will be referred to this way when linking channels, settings, etc. It is the tag used on conflicting nicks as well. This should be very short, and may only contain characters A-Z / a-z.
-type: The protocol of the server.
-    Unreal: UnrealIRCd 3.2.x+
-    Inspircd: InspIRCd 1.2+
-    TS6: TS6 Generic IRCd (ShadowIRCd, Charybdis, ircd-ratbox, etc.)
-linkaddr: IP of the server we're connecting to.
-linkbind: IP Address to bind to when connecting. Used for multi-homed hosts. (Optional).
-linkport: Port to connect on.
-linktype: Use plaintext or SSL.
-    plain: No special encryption. Plain Text.
-    ssl: Use Secure Socket Layers or GnuTLS. 
-sendpass: Password to send to the server on authentication.
-recvpass: Password to accept from the server on authentication.
-linkname: Pseudo-Server to create and connect with. The uplink will receive a connection from this server name.
-netname: Network Name for the uplink. This will show up in /WHOIS for users connected on that network.
-autoconnect: Turn autoconnect on or off
-    1: Autoconnect on start, on rehash, and after so many seconds (defined with /msg Janus AUTOCONNECT)
-    0: Do not autoconnect; wait for the server to try to connect to us. 
-untrusted: Hide all users real-hosts and IPs from Operators on this network.
-    1: Hidden as 0.0.0.0. This does not conflict with anything.
-    0: IPs and hosts will be visible. 
-    numeric_range: Only needed for UnrealIRCd and attributes a range of numerics Janus may use on a network. 
+link <name>: This is the unique identifier for the network. It will be referred to this way when linking channels, settings, etc. It is the tag used on conflicting nicks as well. This should be very short, and may only contain characters A-Z / a-z.  
+type: The protocol of the server.  
+    Unreal: UnrealIRCd 3.2.x+  
+    Inspircd: InspIRCd 1.2+  
+    TS6: TS6 Generic IRCd (ShadowIRCd, Charybdis, ircd-ratbox, etc.)  
+linkaddr: IP of the server we're connecting to.  
+linkbind: IP Address to bind to when connecting. Used for multi-homed hosts. (Optional).  
+linkport: Port to connect on.  
+linktype: Use plaintext or SSL.  
+    plain: No special encryption. Plain Text.  
+    ssl: Use Secure Socket Layers or GnuTLS.   
+sendpass: Password to send to the server on authentication.  
+recvpass: Password to accept from the server on authentication.  
+linkname: Pseudo-Server to create and connect with. The uplink will receive a connection from this server name.  
+netname: Network Name for the uplink. This will show up in /WHOIS for users connected on that network.  
+autoconnect: Turn autoconnect on or off  
+    1: Autoconnect on start, on rehash, and after so many seconds (defined with /msg Janus AUTOCONNECT)  
+    0: Do not autoconnect; wait for the server to try to connect to us.  
+untrusted: Hide all users real-hosts and IPs from Operators on this network.  
+    1: Hidden as 0.0.0.0. This does not conflict with anything.  
+    0: IPs and hosts will be visible.  
+    numeric_range: Only needed for UnrealIRCd and attributes a range of numerics Janus may use on a network.  
 
 Example Link Blocks:
 --------------------
