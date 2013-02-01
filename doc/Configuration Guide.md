@@ -8,30 +8,30 @@ Set Block
 =========
 The set block contains unique information about your Janus service:
 
-    name: Your Janus's "name" in a InterJanus network. This should be short and not a domain name. *  
-    save: Where Janus will save multiple types of information gathered via runtime. *  
-    janus_nick: The nickname of the Janus Bot. This is what you will /msg <ClientNick> HELP to. (Default: Janus)  
-    janus_ident: The user/ident used by the Janus Bot. (Default: janus)  
-    janus_name: The Real Name used by the Janus Bot. (Default: Janus Control Interface)  
-    janus_host: The vHost used by the Janus Bot. (Default: services)  
-    janus_rhost: The interface host used by the Janus Bot. (Default: service.janus)  
-    password: The password the admin account will have. You will identify as IDENTIFY <password>, where "password" is set here. *  
-    lmode: This is how Janus will treat linking. Valid parameters include link and bridge.  
-        link: The traditional method of linking; links only specific channels.  
-        bridge: Will link all channels between servers, making opers more global. You should use 1 set of services here!  
-    pidfile: Janus will create this file with its running PID. You should set this!  
-    datefmt: Defines logging style.  
-    runmode: mplex(-daemon) or uproc(-daemon).  
-        mplex: Multiplex support. Running './configure' will tell you if Multiplex is supported. This is recommended.  
-        uproc: Used if Multiplex is not available  
-        -daemon: Daemonize the process
+name: Your Janus's "name" in a InterJanus network. This should be short and not a domain name. *  
+save: Where Janus will save multiple types of information gathered via runtime. *  
+janus_nick: The nickname of the Janus Bot. This is what you will /msg <ClientNick> HELP to. (Default: Janus)  
+janus_ident: The user/ident used by the Janus Bot. (Default: janus)  
+janus_name: The Real Name used by the Janus Bot. (Default: Janus Control Interface)  
+janus_host: The vHost used by the Janus Bot. (Default: services)  
+janus_rhost: The interface host used by the Janus Bot. (Default: service.janus)  
+password: The password the admin account will have. You will identify as IDENTIFY <password>, where "password" is set here. *  
+lmode: This is how Janus will treat linking. Valid parameters include link and bridge.  
+	link: The traditional method of linking; links only specific channels.  
+	bridge: Will link all channels between servers, making opers more global. You should use 1 set of services here!  
+pidfile: Janus will create this file with its running PID. You should set this!  
+datefmt: Defines logging style.  
+runmode: mplex(-daemon) or uproc(-daemon).  
+	mplex: Multiplex support. Running './configure' will tell you if Multiplex is supported. This is recommended.  
+	uproc: Used if Multiplex is not available  
+	-daemon: Daemonize the process
 
 Below is an example of the minimum required settings that NEED to be set for Janus to work:  
-set {
-	name yourserver
-	save janus.dat
-	password verysecret
-}
+    set {
+        name yourserver
+        save janus.dat
+        password verysecret
+    }
 
 
 Modules Block
@@ -43,15 +43,15 @@ Modules allow Janus to function. Without many of these modules, you will have a 
 
 Example Module block shown below with all available modules:
 
-modules {
-	Commands::*
-	Modules::Ban
-	Modules::Claim
-	Modules::Signals
-	Modules::Spamfilter
-	Modules::WhoisFilter
-	Modules::Global
-}
+    modules {
+        Commands::*
+        Modules::Ban
+        Modules::Claim
+        Modules::Signals
+        Modules::Spamfilter
+        Modules::WhoisFilter
+        Modules::Global
+    }
 
 
 Modules
@@ -63,25 +63,25 @@ Janus's modular nature makes module writing fairly easy. Full Module API documen
 
 Module Example:
 ---------------
-package Modules::Ping;
-use strict;
-use warnings;
- 
-Event::command_add({
-	cmd => 'ping',
-	help => 'Allow users to see if their connection is still alive.',
-	section => 'Other',
-	details => [
-		'Janus will reply "Pong!" to users who issue the command.',
-	],
-	acl => 'none',
-	code => sub {
-		my($src, $dst) = @_;
-		Janus::jmsg($dst, "Ping!"); 
-	}
-});
- 
-1;
+    package Modules::Ping;
+    use strict;
+    use warnings;
+     
+    Event::command_add({
+        cmd => 'ping',
+        help => 'Allow users to see if their connection is still alive.',
+        section => 'Other',
+        details => [
+            'Janus will reply "Pong!" to users who issue the command.',
+        ],
+        acl => 'none',
+        code => sub {
+            my($src, $dst) = @_;
+            Janus::jmsg($dst, "Ping!"); 
+        }
+    });
+     
+    1;
 
 Ban
 ---
@@ -135,18 +135,18 @@ log Hub#Services { will log to #Services on the Hub network. The second paramete
 
 Example Log Blocks below:
 
-log log/%Y%m%d.log {
-	type File
-	filter debug info warn err audit debug_in info_in warn_in err_in hook_err poison
-	# dump 1
-	rotate 86400
-	# closeact gzip
-}`
+    log log/%Y%m%d.log {
+        type File
+        filter debug info warn err audit debug_in info_in warn_in err_in hook_err poison
+        # dump 1
+        rotate 86400
+        # closeact gzip
+    }
 
-log gig#Services {
-	type Channel
-	filter err audit err_in
-}
+    log gig#Services {
+        type Channel
+        filter err audit err_in
+    }
 
 
 Listen Block
@@ -164,27 +164,27 @@ Link Block
 
 You must have one link block for each network. This is how Janus links to your IRCd. Two link blocks are required for a functioning Janus. Any less and its just wasted space.
 
-    link <name>: This is the unique identifier for the network. It will be referred to this way when linking channels, settings, etc. It is the tag used on conflicting nicks as well. This should be very short, and may only contain characters A-Z / a-z.
-    type: The protocol of the server.
-        Unreal: UnrealIRCd 3.2.x+
-        Inspircd: InspIRCd 1.2+
-        TS6: TS6 Generic IRCd (ShadowIRCd, Charybdis, ircd-ratbox, etc.)
-    linkaddr: IP of the server we're connecting to.
-    linkbind: IP Address to bind to when connecting. Used for multi-homed hosts. (Optional).
-    linkport: Port to connect on.
-    linktype: Use plaintext or SSL.
-        plain: No special encryption. Plain Text.
-        ssl: Use Secure Socket Layers or GnuTLS. 
-    sendpass: Password to send to the server on authentication.
-    recvpass: Password to accept from the server on authentication.
-    linkname: Pseudo-Server to create and connect with. The uplink will receive a connection from this server name.
-    netname: Network Name for the uplink. This will show up in /WHOIS for users connected on that network.
-    autoconnect: Turn autoconnect on or off
-        1: Autoconnect on start, on rehash, and after so many seconds (defined with /msg Janus AUTOCONNECT)
-        0: Do not autoconnect; wait for the server to try to connect to us. 
-    untrusted: Hide all users real-hosts and IPs from Operators on this network.
-        1: Hidden as 0.0.0.0. This does not conflict with anything.
-        0: IPs and hosts will be visible. 
+link <name>: This is the unique identifier for the network. It will be referred to this way when linking channels, settings, etc. It is the tag used on conflicting nicks as well. This should be very short, and may only contain characters A-Z / a-z.
+type: The protocol of the server.
+    Unreal: UnrealIRCd 3.2.x+
+    Inspircd: InspIRCd 1.2+
+    TS6: TS6 Generic IRCd (ShadowIRCd, Charybdis, ircd-ratbox, etc.)
+linkaddr: IP of the server we're connecting to.
+linkbind: IP Address to bind to when connecting. Used for multi-homed hosts. (Optional).
+linkport: Port to connect on.
+linktype: Use plaintext or SSL.
+    plain: No special encryption. Plain Text.
+    ssl: Use Secure Socket Layers or GnuTLS. 
+sendpass: Password to send to the server on authentication.
+recvpass: Password to accept from the server on authentication.
+linkname: Pseudo-Server to create and connect with. The uplink will receive a connection from this server name.
+netname: Network Name for the uplink. This will show up in /WHOIS for users connected on that network.
+autoconnect: Turn autoconnect on or off
+    1: Autoconnect on start, on rehash, and after so many seconds (defined with /msg Janus AUTOCONNECT)
+    0: Do not autoconnect; wait for the server to try to connect to us. 
+untrusted: Hide all users real-hosts and IPs from Operators on this network.
+    1: Hidden as 0.0.0.0. This does not conflict with anything.
+    0: IPs and hosts will be visible. 
     numeric_range: Only needed for UnrealIRCd and attributes a range of numerics Janus may use on a network. 
 
 Example Link Blocks:
@@ -192,52 +192,51 @@ Example Link Blocks:
 
 Unreal Link Block
 -----------------
-
-link unreal {
-	type Unreal
-	linkaddr 127.0.0.1
-	linkbind 255.255.255.0
-	linkport 8005
-	linktype plain
-	sendpass PaSs
-	recvpass pAsS
-	linkname net.domain.com
-	netname MyNetwork
-	autoconnect 1
-	untrusted 0
-	numeric_range 42-43
-}
+    link unreal {
+        type Unreal
+        linkaddr 127.0.0.1
+        linkbind 255.255.255.0
+        linkport 8005
+        linktype plain
+        sendpass PaSs
+        recvpass pAsS
+        linkname net.domain.com
+        netname MyNetwork
+        autoconnect 1
+        untrusted 0
+        numeric_range 42-43
+    }
 
 
 InspIRCd Link Block
 --------------------
-link insp {
-	type InspIRCd
-	linkaddr 127.0.0.1
-	linkbind 255.255.255.0
-	linkport 8005
-	linktype plain
-	sendpass PaSs
-	recvpass pAsS
-	linkname net.domain.com
-	netname MyNetwork
-	autoconnect 1
-	untrusted 0
-}
+    link insp {
+        type InspIRCd
+        linkaddr 127.0.0.1
+        linkbind 255.255.255.0
+        linkport 8005
+        linktype plain
+        sendpass PaSs
+        recvpass pAsS
+        linkname net.domain.com
+        netname MyNetwork
+        autoconnect 1
+        untrusted 0
+    }
 
 
 TS6 Link Block
 --------------
-link ts6 {
-	type TS6
-	linkaddr 127.0.0.1
-	linkbind 255.255.255.0
-	linkport 8005
-	linktype plain
-	sendpass PaSs
-	recvpass pAsS
-	linkname net.domain.com
-	netname MyNetwork
-	autoconnect 1
-	untrusted 0
-}
+    link ts6 {
+        type TS6
+        linkaddr 127.0.0.1
+        linkbind 255.255.255.0
+        linkport 8005
+        linktype plain
+        sendpass PaSs
+        recvpass pAsS
+        linkname net.domain.com
+        netname MyNetwork
+        autoconnect 1
+        untrusted 0
+    }
