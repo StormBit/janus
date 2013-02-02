@@ -382,6 +382,7 @@ sub add_net {
 	my($chan, $src) = @_;
 	my $net = $homenet[$$src];
 	my $sname = $src->str($net) || '?';
+	$Janus::Burst = 1;
 
 	delete $nets[$$chan]{$$net}; # remove from $joinnets
 
@@ -478,6 +479,7 @@ sub add_net {
 
 sub migrate_from {
 	my $chan = shift;
+	$Janus::Burst = 1;
 	Log::info("Migrating nicks to $$chan from", map $$_, @_);
 	my %burstmap;
 	for my $n ($chan->nets) {
@@ -551,6 +553,7 @@ sub real_keyname {
 
 sub unhook_destroyed {
 	my($chan,$remoteonly) = @_;
+	$Janus::Burst = 1;
 	unless ($remoteonly) {
 		my $net = $chan->homenet;
 		if (1 < scalar keys %{$nets[$$chan]}) {
@@ -579,6 +582,7 @@ sub unhook_destroyed {
 
 sub del_remoteonly {
 	my $chan = shift;
+	$Janus::Burst = 1;
 	if (@{$nicks[$$chan]}) {
 		my @nets = values %{$nets[$$chan]};
 		my $cij = undef;
@@ -618,6 +622,7 @@ Event::hook_add(
 		my $schan = $act->{in};
 		my $dchan = $act->{dst};
 		my $net = $act->{net};
+		$Janus::Burst = 1;
 		unless ($schan) {
 			my $name = $act->{name};
 			if ($net->isa('LocalNetwork')) {
@@ -641,6 +646,7 @@ Event::hook_add(
 		my $act = shift;
 		my $dchan = $act->{dst};
 		my $schan = $act->{in};
+		$Janus::Burst = 1;
 
 		my $kn = $dchan->real_keyname;
 		$keyname[$$dchan] = $kn;
@@ -657,6 +663,7 @@ Event::hook_add(
 		my $act = shift;
 		my $chan = $act->{dst};
 		my $net = $act->{net};
+		$Janus::Burst = 1;
 		if ($net == $homenet[$$chan]) {
 			delete $Janus::gchans{$chan->real_keyname};
 			my $cause = $act->{cause} . '2';
@@ -680,6 +687,7 @@ Event::hook_add(
 		my $act = shift;
 		my $chan = $act->{dst};
 		my $net = $act->{net};
+		$Janus::Burst = 1;
 		return if $net == $homenet[$$chan];
 		$act->{sendto} = [ values %{$nets[$$chan]} ]; # before the splitting
 		delete $nets[$$chan]{$$net} or warn;
@@ -744,6 +752,7 @@ Event::hook_add(
 		Event::insert_full(@parts);
 	}, DELINK => cleanup => sub {
 		my $act = shift;
+		$Janus::Burst = 1;
 		del_remoteonly($act->{dst});
 		return if $act->{net} == $Interface::network;
 		del_remoteonly($act->{split}) if $act->{split};
@@ -751,6 +760,7 @@ Event::hook_add(
 		my $act = shift;
 		my $net = $act->{net};
 		my @clean;
+		$Janus::Burst = 1;
 		for my $chan ($net->all_chans()) {
 			warn "Channel not on network!" unless $chan->is_on($net);
 			push @clean, +{
@@ -766,6 +776,7 @@ Event::hook_add(
 	}, NETSPLIT => cleanup => sub {
 		my $act = shift;
 		my $net = $act->{net};
+		$Janus::Burst = 1;
 		Persist::poison($_) for $net->all_chans();
 	},
 );

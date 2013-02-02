@@ -349,10 +349,10 @@ Event::setting_add({
 	help => 'Automatically rejoin channel when kicked (0|1)',
 	default => 1,
 }, {
-	name => 'cb_showevents',
+	name => 'cb_noshowevents',
 	type => __PACKAGE__,
-	help => 'Relay Join/Part/Quit/Nick events to ClientBot network (disable for busy nets) (0|1)',
-	default => 1,
+	help => 'Doesn\'t Relay Join/Part/Quit/Nick events to ClientBot network (Enable for busy nets) (0|1)',
+	default => 0,
 });
 
 sub dump_sendq {
@@ -415,7 +415,7 @@ sub nicklen { 31 }
 			$net->add_halfout([ 10, "JOIN $chan", 'JOIN', $chan ]);
 			();
 		} else {
-			return () unless Setting::get(cb_showevents => $net);
+			return () if Setting::get(cb_noshowevents => $net);
 			return () if $Janus::Burst;
 			return () if $act->{netsplit_quit};
 			my $id = $src->str($net).' ('.$src->info('ident').'@'.$src->info('vhost').')';
@@ -458,7 +458,7 @@ sub nicklen { 31 }
 			my $chan = $dst->str($net);
 			"PART $chan :$act->{msg}";
 		} else {
-			return () unless Setting::get(cb_showevents => $net);
+			return () if Setting::get(cb_noshowevents => $net);
 			return () if $Janus::Burst;
 			return () if $act->{netsplit_quit};
 			$net->cmd1(PRIVMSG => $dst, $src->str($net).' has Left '.$dst->str($net).' ('.$act->{msg}.')');
@@ -469,7 +469,7 @@ sub nicklen { 31 }
 		my $nick = $act->{dst};
 		my @out;
 		for my $chan ($nick->all_chans()) {
-			next unless Setting::get(cb_showevents => $net);
+			next if Setting::get(cb_noshowevents => $net);
 			next if $Janus::Burst;
 			next if $act->{netsplit_quit};
 			push @out, $net->cmd1(PRIVMSG => $chan, $nick->str($net).' has Quit ('.$act->{msg}.')');
@@ -482,7 +482,7 @@ sub nicklen { 31 }
 		my @out;
 		my $msg = $act->{from}->{$$net}.' is now known as '.$act->{to}->{$$net};
 		for my $chan ($nick->all_chans()) {
-			next unless  Setting::get(cb_showevents => $net);
+			next if Setting::get(cb_noshowevents => $net);
 			next if $Janus::Burst;
 			next if $act->{netsplit_quit};
 			push @out, $net->cmd1(PRIVMSG => $chan, $msg);
@@ -1022,7 +1022,6 @@ sub kicked {
 		}
 		$half_in[$$net] = undef;
 		my $chan = $net->chan($_[3]) or return ();
-		#return () unless $chan->get_mode('cb_topicsync');
 		return {
 			type => 'TOPIC',
 			topic => $h->[2],
@@ -1038,7 +1037,6 @@ sub kicked {
 		my $src = $net->item($_[0]) or return ();
 		my $chan = $net->chan($_[2]) or return ();
 		return () if $src == $Interface::janus;
-		#return () unless $chan->get_mode('cb_topicsync');
 		return {
 			type => 'TOPIC',
 			topic => $_[-1],
