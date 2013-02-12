@@ -19,7 +19,7 @@ Yes! You add Janus just like you would another server by linking with a link blo
 How do I use Janus once it's installed?
 ---------------------------------------
 
-First thing you should do is run ./configure to compile multiplex and then configure janus.conf using the `Configuration Guide`.  
+First thing you should do is run `./configure` to compile multiplex and then configure `janus.conf` using the `Configuration Guide`. Then just type `./janus` to start it.
 Once it's running, use the `Getting Started` guide to learn how to use Janus.
 
 
