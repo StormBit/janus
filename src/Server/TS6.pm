@@ -433,6 +433,7 @@ $moddef{CORE} = {
 		'm' => 'r_moderated',
 		n => 'r_mustjoin',
 		o => 'n_op',
+		a => 'n_admin',
 		p =>   't1_chanhide',
 		r => 'r_reginvite',
 		's' => 't2_chanhide',
