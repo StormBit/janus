@@ -1081,9 +1081,9 @@ sub kicked {
 		$gecos =~ s/^\d+\s//; # remove server hop count
 		my @out = $net->cli_hostintro($_[7], $_[4], $_[5], $gecos);
 		my %mode;
-		$mode{op} = 1 if $_[8] =~ /[@]/;
-		$mode{admin} = 1 if $_[8] =~ /[&]/;
-		$mode{owner} = 1 if $_[8] =~ /[~]/;
+		$mode{op} = 1 if $_[8] =~ /\@/;
+		$mode{admin} = 1 if $_[8] =~ /&/;
+		$mode{owner} = 1 if $_[8] =~ /~/;
 		$mode{halfop} = 1 if $_[8] =~ /\%/;
 		$mode{voice} = 1 if $_[8] =~ /\+/;
 		push @out, +{
