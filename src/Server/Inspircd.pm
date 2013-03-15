@@ -948,6 +948,7 @@ $moddef{CORE} = {
 		();
 	},
 	TIMESET => \&ignore,
+	ALLTIME => \&ignore,
 
 # from m_globalload.so, included so that dynamic module loading always works
 	GLOADMODULE => sub {
