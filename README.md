@@ -8,7 +8,7 @@ What changes did you make?
 
 In short? Most of the annoying messages have been disabled. The Controller bot and it's features have been made more configurable from the conf file. A few features like custom (branded) domain names for the Janus bots, forced network tagging, colour code stripping and oper sharing level have been added in. The conf file also have been modified a bit to give a better working example and several notes have been added in to avoid confusion.
 
-Notiable Changes: There is only one InspIRCd module and one TS6 module. This was done for simplicity and you should be able to link to all modern versions of InspIRCd (1.2+ & 2.0+) as well as all the TS6 based IRCds like Ratbox, Charybdis and ShadowIRCd without any problems. Another minor change with the TS6 module is that you do not need the ircd variable anymore since the Charybdis features are enabled by default.
+Notable Changes: There is only one InspIRCd module and one TS6 module. This was done for simplicity and you should be able to link to all modern versions of InspIRCd (1.2+ & 2.0+) as well as all the TS6 based IRCds like Ratbox, Charybdis and ShadowIRCd without any problems. Another minor change with the TS6 module is that you do not need the ircd variable anymore since the Charybdis features are enabled by default.
 
 How do I get a copy?
 --------------------
