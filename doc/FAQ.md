@@ -32,9 +32,9 @@ InspIRCd, UnrealIRCd, Charybdis, Ircd-seven, Ratbox IRCd, ShadowIRCd and most TS
 What is different between Janus v1.10 and this version? 
 -------------------------------------------------------
 
-This version has several bug fixes and new features. It's a hybrid of trix-janus and the the old Sourceforge version, being more like the prior without all the bugs that comes with it. 
+This version has several bug fixes and new features. It's a hybrid of trix-janus and the the old sourceforge version, being more like the prior without all the bugs that comes with it. 
 
-New features: Custom Domain for links, Forced Network Tagging and mIRC Control Code Control.
-Improvements: ClientBot has more sane defaults, more configurable and doesn't flood a channel on join or netsplit. Most of Janus' defaults can now be set from the conf file like Oper Visiblity, Link Requirement and the Tag Seperator. 
-Major Changes: There is only one TS6 module and one InspIRCd module to simplify the configuration process. 'janus.pl' has been renamed to 'janus'. The configuration file has a better working example and this Janus includes better documentation in /doc to get you started quickly.
-Bug Fixes: Most of the annoying or insane error messages have been disabled or removed and a fix for compiling Multiplex on Ubuntu with a broken copy of OpenSLL has been added. The missing channel owner(s) bug found in the latest github version is NOT preset in this version ;)
+**New features:** Custom Domain for links, Forced Network Tagging and mIRC Control Code Control.  
+**Improvements:** ClientBot has more sane defaults, more configurable and doesn't flood a channel on join or netsplit. Most of Janus' defaults can now be set from the conf file like Oper Visibility, Link Requirement and the Tag Separator.  
+**Major Changes:** There is only one TS6 module and one InspIRCd module to simplify the configuration process. `janus.pl` has been renamed to `janus`. The configuration file has a better working example and this Janus includes better documentation in /doc to get you started quickly.  
+**Bug Fixes:** Most of the annoying or insane error messages have been disabled or removed and a fix for compiling Multiplex on Ubuntu with a broken copy of OpenSLL has been added. The missing channel owner(s) bug found in the latest github version is NOT preset in this version ;)
