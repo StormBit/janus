@@ -34,7 +34,7 @@ What is different between Janus v1.10 and this version?
 
 This version has several bug fixes and new features. It's a hybrid of trix-janus and the the old sourceforge version, being more like the prior without all the bugs that comes with it. 
 
-**New features:** Custom Domain for links, Forced Network Tagging and mIRC Control Code Control.  
-**Improvements:** ClientBot has more sane defaults, more configurable and doesn't flood a channel on join or netsplit. Most of Janus' defaults can now be set from the conf file like Oper Visibility, Link Requirement and the Tag Separator.  
-**Major Changes:** There is only one TS6 module and one InspIRCd module to simplify the configuration process. `janus.pl` has been renamed to `janus`. The configuration file has a better working example and this Janus includes better documentation in /doc to get you started quickly.  
+**New features:** Custom Domain for links, Forced Network Tagging, mIRC Control Code Control and the ability to set how the bot responds to you - either by NOTICE or PRIVMSG.  
+**Improvements:** ClientBot has more sane defaults, more configurable and doesn't flood a channel on join or netsplit. Most of Janus' defaults can now be set from the conf file like Oper Visibility, Link Requirement and the Tag Separator. InterJanus links can now be up to 70 seconds out of sync before refusing to connect compared to the default 20 seconds.  
+**Major Changes:** There is only one TS6 module and one InspIRCd module to simplify the configuration process. `janus.pl` has been renamed to `janus`. The configuration file has a better working example and this Janus includes better documentation in /doc to get you started quickly. Most of the features have been ported to all Server modules. The TS6 module doesn't use `ircd` anymore and uses the Charybdis/ShadowIRCd features by default.  
 **Bug Fixes:** Most of the annoying or insane error messages have been disabled or removed and a fix for compiling Multiplex on Ubuntu with a broken copy of OpenSLL has been added. The missing channel owner(s) bug found in the latest github version is NOT preset in this version ;)
