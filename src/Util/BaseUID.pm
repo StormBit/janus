@@ -137,6 +137,7 @@ sub _request_nick {
 		my $tagsep = $Janus::septag;
 		my $tagtest = Setting::get(tagsep => $net);
 		$tagsep = $tagtest if $tagtest eq '_';
+		$tagsep =~ s/\//\|/g; if $tagsep eq '_';
 		my $tag = $tagsep . $nick->homenet()->name();
 		my $i = 0;
 		$given = substr($reqnick, 0, $maxlen - length $tag) . $tag;
