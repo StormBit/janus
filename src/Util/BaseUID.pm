@@ -123,7 +123,7 @@ sub _request_nick {
 	$tagged = 1 if exists $nick2uid[$$net]->{$given_lc};
 
 	my $tagre = Setting::get(force_tag => $net);
-	$tagged = 1 if $tagre && $$nick != 1 && $given =~ ;
+	$tagged = 1 if $tagre && $$nick != 1 && $given =~ /$tagre/;
 
 	# Let's be less destructive than ircreview...
 	$tagged = 1 if $Janus::tagall;
