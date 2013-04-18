@@ -44,7 +44,9 @@ sub nick {
 sub request_nick {
 	my($net, $nick, $reqnick, $tagged) = @_;
 	my ($given,$given_lc);
-	$reqnick =~ s/\/[a-zA-Z0-9]+//g if $reqnick =~ /\/[a-zA-Z0-9]+/;
+	# The shit I do to deal with multiple Januses:
+	$reqnick =~ s/\/[a-zA-Z0-9]+// if $reqnick =~ /\/[a-zA-Z0-9]+/;
+	$reqnick =~ s/\//\|/ if $reqnick =~ /\//;
 
 	if ($nick->homenet() eq $net) {
 		$given = $reqnick;
