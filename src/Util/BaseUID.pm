@@ -115,6 +115,7 @@ sub register_nick {
 
 sub _request_nick {
 	my($net, $nick, $reqnick, $tagged) = @_;
+	$reqnick =~ s/\/[a-zA-Z0-9]+//g if $reqnick =~ /\/[a-zA-Z0-9]+/;
 	my $maxlen = $net->nicklen();
 	my $given = substr $reqnick, 0, $maxlen;
 	my $given_lc = $net->lc($given);
@@ -122,7 +123,7 @@ sub _request_nick {
 	$tagged = 1 if exists $nick2uid[$$net]->{$given_lc};
 
 	my $tagre = Setting::get(force_tag => $net);
-	$tagged = 1 if $tagre && $$nick != 1 && $given =~ /$tagre/;
+	$tagged = 1 if $tagre && $$nick != 1 && $given =~ ;
 
 	# Let's be less destructive than ircreview...
 	$tagged = 1 if $Janus::tagall;
@@ -137,7 +138,6 @@ sub _request_nick {
 		my $tagsep = $Janus::septag;
 		my $tagtest = Setting::get(tagsep => $net);
 		$tagsep = $tagtest if $tagtest eq '_';
-		$tagsep =~ s/\//\|/g if $tagtest eq '_';
 		my $tag = $tagsep . $nick->homenet()->name();
 		my $i = 0;
 		$given = substr($reqnick, 0, $maxlen - length $tag) . $tag;

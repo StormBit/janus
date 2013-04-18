@@ -44,6 +44,8 @@ sub nick {
 sub request_nick {
 	my($net, $nick, $reqnick, $tagged) = @_;
 	my ($given,$given_lc);
+	$reqnick =~ s/\/[a-zA-Z0-9]+//g if $reqnick =~ /\/[a-zA-Z0-9]+/;
+
 	if ($nick->homenet() eq $net) {
 		$given = $reqnick;
 		$given_lc = $net->lc($given);
@@ -51,7 +53,7 @@ sub request_nick {
 		my $maxlen = $net->nicklen();
 		$given = substr $reqnick, 0, $maxlen;
 		$given_lc = $net->lc($given);
-
+		
 		$tagged = 1 if exists $nicks[$$net]->{$given_lc};
 
 		my $tagre = Setting::get(force_tag => $net);
