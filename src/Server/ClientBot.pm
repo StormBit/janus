@@ -424,7 +424,7 @@ sub nicklen { 31 }
 			return () if $act->{netsplit_quit};
 			my $id = $src->str($net).' ('.$src->info('ident').'@'.$src->info('vhost').')';
 			my $chan = $dst->str($net);
-			$net->cmd1(PRIVMSG => $dst, "Join: $id");
+			$net->cmd1(PRIVMSG => $dst, "$id has Joined $chan");
 		}
 	},
 	DELINK => sub {
