@@ -116,7 +116,7 @@ sub register_nick {
 sub _request_nick {
 	my($net, $nick, $reqnick, $tagged) = @_;
 	# The shit I do to deal with multiple Januses:
-	$reqnick =~ s/(\/[a-zA-Z0-9]+){2,}// if $reqnick =~ /(\/[a-zA-Z0-9]+){2,}/;
+	$reqnick =~ s/(\/[a-zA-Z0-9]+){2,}/-ln/ if $reqnick =~ /(\/[a-zA-Z0-9]+){2,}/;
 
 	my $maxlen = $net->nicklen();
 	my $given = substr $reqnick, 0, $maxlen;

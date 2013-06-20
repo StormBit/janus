@@ -647,14 +647,6 @@ sub pm_not {
 		}
 		if ($_[1] eq 'PRIVMSG') {
 		#	$net->send("NOTICE $_[0] :Error: user not found. To message a user, prefix your message with their nick");
-			my $dst = $_[0];
-			return +{
-				type => 'MSG',
-				src => $src,
-				dst => $dst,
-				msg => $_[3],
-				msgtype => $_[1],
-			} if $dst;
 		} elsif ($_[1] eq 'NOTICE') {
 			if ($net->lc($_[0]) eq 'nickserv') {
 				if ($_[3] =~ /(registered|protected|identify)/i && $_[3] !~ / not /i) {
