@@ -1,0 +1,57 @@
+<h1>Getting Started</h1>
+
+<p>This guide should teach you the basics of how to use Janus the right way ;)</p>
+
+<h2>Managing Janus Channels</h2>
+
+<p>Before your channel can be brought to other parts of the Janus network, introducing your channel to Janus is necessary. To communicate with Janus, you simply PM the user "Janus" (or as set by the nickname in janus.conf)</p>
+
+<p>First ensure that you are atleast an op in the channel you would like to bring to Janus then run: <br />
+<code>/msg Janus create &lt;channel name&gt;</code></p>
+
+<p>Janus should now be able to share your channel with other networks in the Janus network.</p>
+
+<p>To protect your channel so other networks cannot modify permissions, first find out which network you are on. To do so run: <br />
+<code>/msg Janus linked</code></p>
+
+<p>Now, look at the first line it displays. The bolded network, or first listed network, is your current network.</p>
+
+<p>Example: Linked Networks:   <strong>fn</strong>      rtn xr zn  </p>
+
+<p>The above displays <code>/msg Janus Linked</code> indicating "fn" being the current network.</p>
+
+<p>Now that we have the network claim the channel to your network with: <br />
+<code>/msg Janus claim &lt;#channel name&gt; &lt;Home Network&gt;</code></p>
+
+<p>Please note: The <Home Network> is the network abbreviation of the network and not it's full name.</p>
+
+<p>After introducing your channel, now it is time to link your channel into other networks. Depending on the network, prior permission may need to be granted. First, find out the other network's server address - it is required to log into the other network to do this.</p>
+
+<p>Now join the channel you want to link your channel into. If I had #Generic on "fn", and I wanted it to be named "#Generic" on "zz", I log into "zz"'s servers and <code>/join #Generic</code> and then possibly registering it. Registration of both channels aren't required, but is generally suggested for the network that's sharing it. The linking network doesn't have to have the channel registered.</p>
+
+<p>Now that you are in the other network's servers, privage message Janus, and link the channel: <br />
+<code>/msg Janus link &lt;#channel name&gt; &lt;Home Network&gt;</code>
+Example: <code>/msg Janus link #Generic fn</code></p>
+
+<p>Now if I wanted to link two differently named channels, such as linking "#Generic" on Network A to "#Bland" on Network B, I would join #Bland on the other network and type: <br />
+<code>/msg Janus link &lt;#New Name&gt; &lt;Home Network&gt; &lt;#Home Network's Channel Name&gt;</code>
+Example: <code>/msg Janus link #Bland fn #Generic</code>  </p>
+
+<p>Sometimes channel owners may need to pull their channel from a certain network. From the home network run: <br />
+<code>/msg Janus delink &lt;#Channel&gt; &lt;Home Network&gt;</code></p>
+
+<p>Removing a channel from Janus is even easier because it automatically delinks all network linked to a channel if the channel is destroyed. You remove a channel by running the folowing command: <br />
+<code>/msg Janus destroy &lt;#Channel&gt;</code></p>
+
+<h2>Managing ClientBot Channels</h2>
+
+<p>ClientBot links are slightly different than normal Janus links since the majority of it's functionality is only be accessiable from one of the normally linked Janus Networks. The Home Network in this regard will refer to any network that has access to the Janus Bot and NOT the ClientBot/RelayBot. The first step is to create a ClientBot link block in your janus.conf for the desired network you wish to link to using it. Then it's a simple step of just rehashing the conf file to get it to connect (if autoconnect is enabled).</p>
+
+<p>Once it's connected, use one of properly Janus linked Servers' Controller bot to control the ClientBot.</p>
+
+<p>For example, if I wanted the bot to join and link a channel on ClientBot link network "cs", I would type <code>clink cs #channel</code> to link a similary named channel or <code>clink cs #channel fn #channel2</code> if they had different names.</p>
+
+<p>You can remove ClientBot links by simply typing: <code>clinkrm #channel</code> and the channel will instantly be removed and the ClientBot will part said channel.</p>
+
+<p>The ClientBot also features two more Unique commands, namely <code>botnick</code> and <code>forceid</code>.
+You use <code>botnick</code> (Example: <code>/msg Janus botnick AweBot</code>) to change the name of the ClientBot, while you use <code>forceid</code> to make it identify itself to the network's NickServ (if a nspass is set).</p>
