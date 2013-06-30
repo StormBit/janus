@@ -50,7 +50,7 @@ $mplexdaemon = 'c-src/multiplex.exe' if $^O eq 'cygwin';
 my $runmode = $Conffile::netconf{set}{runmode};
 $runmode = 'debug' if $^P;
 unless ($runmode) {
-	if (-x 'c-src/multiplex') {
+	if (-x $mplexdaemon) {
 		$runmode = 'mplex-daemon';
 	} else {
 		$runmode = 'uproc-daemon';
