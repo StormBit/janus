@@ -556,9 +556,15 @@ static void sig2child(int sig) {
 }
 
 static void init() {
+#ifndef __CYGWIN__
 	struct sigaction sig = {
 		.sa_handler = SIG_IGN,
 	};
+#else
+	struct sigaction sig;
+	memset(&sig, 0, sizeof sig);
+	sig.sa_handler = SIG_IGN;
+#endif
 	sigaction(SIGPIPE, &sig, NULL);
 	sigaction(SIGCHLD, &sig, NULL);
 
