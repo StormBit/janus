@@ -33,7 +33,7 @@ Event::command_add({
 			'please visit https://github.com/trixarian/janus to do so.',
 			'-',
 			'Contributors: Matthew Barksdale (mattwb65), Russel M Brandford (RussellB28),',
-			'neersighted, Alex Wilson (antoligy)',			
+			'neersighted, Alex Wilson (antoligy) and Richard G (richardg867)',			
 		);
 	}
 }, {
