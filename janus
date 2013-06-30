@@ -44,6 +44,9 @@ unless (%Conffile::netconf) {
 	exit 1;
 }
 
+my $mplexdaemon = 'c-src/multiplex';
+$mplexdaemon = 'c-src/multiplex.exe' if $^O eq 'cygwin';
+
 my $runmode = $Conffile::netconf{set}{runmode};
 $runmode = 'debug' if $^P;
 unless ($runmode) {
@@ -76,7 +79,7 @@ if ($runmode =~ s/-daemon$//) {
 }
 
 if ($runmode eq 'mplex') {
-	exec { './c-src/multiplex' } 'janus', @ARGV;
+	exec { $mplexdaemon } 'janus', @ARGV;
 	exit 1;
 }
 
