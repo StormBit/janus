@@ -72,7 +72,8 @@ set {
 	#   any other network present in the Janus linked Network.
 	# Note: This can be any character and defaults to / when not set or left empty.
 	# Note: This is used to avoid nickname collisions so don't use strange/unsupported
-	# characters here or you'll have serious desync problems.
+	# characters here or you'll have serious desync problems. TS6 Networks will change
+	# / to - because it's an unsupported nickname character.
 	#septag /
 
 	# Forced Network Tagging - This will force network tags for all users
@@ -84,7 +85,6 @@ set {
 
 	# Oper Visibity Level - Controls how oper statuses is shared across Janus linked
 	# networks. Leave this commented out or set it to 0 to keep opers in /lusers down.
-	# Note: This doesn't work with UnrealIRCd and I broke it intentionally... :P
 	# Note: This can be overridden on a per network basis via the oper_visibilty variable.
 	# 0 - Disables all Oper Status Sharing
 	# 1 - Adds +H (hide oper stats mode) to all Opers it shares
