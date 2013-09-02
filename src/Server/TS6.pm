@@ -434,7 +434,7 @@ $moddef{CORE} = {
 		n => 'r_mustjoin',
 		o => 'n_op',
 		a => 'n_admin',
-		p =>   't1_chanhide',
+		p => 't1_chanhide',
 		r => 'r_reginvite',
 		's' => 't2_chanhide',
 		t => 'r_topic',
@@ -1053,8 +1053,8 @@ $moddef{CORE} = {
 				next unless $chan->is_on($net);
 				my $mode = join '', map {
 					$chan->has_nmode($_, $nick) ? ($net->txt2cmode("n_$_") || '') : ''
-				} qw/voice halfop op/;
-				$mode =~ tr/ohv/@%+/;
+				} qw/voice halfop op admin/;
+				$mode =~ tr/aohv/!@%+/;
 				my @cmodes = Modes::to_multi($net, Modes::dump($chan), 10);
 				@cmodes = (['+']) unless @cmodes && @{$cmodes[0]};
 
