@@ -151,7 +151,7 @@ sub read_conf {
 		if ($tagfix == 1 or $tagfix == 0) {
 			$Janus::tagfix = $tagfix;
 		} else {
-			Log::err("Bad value $tag for set::tagall");
+			Log::err("Bad value $tagfix for set::tagfix");
 			return;
 		}
 	}
