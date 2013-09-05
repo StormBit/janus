@@ -146,6 +146,15 @@ sub read_conf {
 			return;
 		}
 	}
+	unless ($Janus::tagfix) {
+		my $tagfix = $newconf{set}{tagfix} || 0;
+		if ($tagfix == 1 or $tagfix == 0) {
+			$Janus::tagfix = $tagfix;
+		} else {
+			Log::err("Bad value $tag for set::tagall");
+			return;
+		}
+	}
 	unless ($Janus::tagall) {
 		my $tag = $newconf{set}{tagall} || 0;
 		if ($tag == 1 or $tag == 0) {
