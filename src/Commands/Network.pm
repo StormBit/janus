@@ -70,7 +70,7 @@ Event::command_add({
 		Event::schedule(+{
 			delay => 1,
 			code => sub {
-				exec 'perl', 'janus.pl', $Conffile::conffile;
+				exec 'perl', 'janus', $Conffile::conffile;
 			},
 		});
 	},
