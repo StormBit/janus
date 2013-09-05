@@ -73,8 +73,13 @@ set {
 	# Note: This can be any character and defaults to / when not set or left empty.
 	# Note: This is used to avoid nickname collisions so don't use strange/unsupported
 	# characters here or you'll have serious desync problems. TS6 Networks will change
-	# / to - because it's an unsupported nickname character.
+	# / to | because it's an unsupported nickname character.
 	#septag /
+
+	# Fix Tagging - This will correct issues with TS6 servers when linking to networks
+	# that use multiple Januses rather than using InterJanus. This should resolve the 
+	# vague nicklen error caused by the use if the / character in nicknames.
+	#tagfix 1
 
 	# Forced Network Tagging - This will force network tags for all users
 	# connected via janus to your network and may resolve common nickname
