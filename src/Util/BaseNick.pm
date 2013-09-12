@@ -43,7 +43,6 @@ sub nick {
 # Request a nick on a remote network (CONNECT/JOIN must be sent AFTER this)
 sub request_nick {
 	my($net, $nick, $reqnick, $tagged) = @_;
-	$reqnick =~ s/\//\|/g if $reqnick =~ /\//g && $Janus::tagfix;
 	my ($given,$given_lc);
 
 	if ($nick->homenet() eq $net) {
