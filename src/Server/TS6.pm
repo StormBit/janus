@@ -372,7 +372,7 @@ $moddef{CAPAB_SAVE} = {
 
 $moddef{CHARYBDIS} = {
 	cmode => {
-#		q => 'l_quiet',
+		q => 'l_quiet',
 		f => 's_forward',
 		j => 's_joinlimit',
 		P => 'r_permanent',
@@ -432,7 +432,6 @@ $moddef{CORE} = {
 		l => 's_limit',
 		'm' => 'r_moderated',
 		n => 'r_mustjoin',
-		q => 'n_admin',
 		a => 'n_admin',
 		o => 'n_op',
 		h => 'n_halfop',
@@ -881,7 +880,7 @@ $moddef{CORE} = {
 			my $nmode = $1;
 			my $nick = $net->mynick($2) or next;
 			my %mh = map {
-				tr/@%+/ohv/;
+				tr/!@%+/aohv/;
 				$_ = $net->cmode2txt($_);
 				/^n_(.+)/ ? ($1 => 1) : ();
 			} split //, $nmode;
@@ -1106,7 +1105,7 @@ $moddef{CORE} = {
 		my $mode = '';
 		if ($act->{mode}) {
 			$mode .= ($net->txt2cmode("n_$_") || '') for keys %{$act->{mode}};
-			$mode =~ tr/ohv/@%+/;
+			$mode =~ tr/aohv/!@%+/;
 			my @cmodes = Modes::to_multi($net, Modes::dump($chan));
 			@cmodes = (['+']) unless @cmodes && @{$cmodes[0]};
 			return $net->ncmd(SJOIN => $chan->ts, $chan, @{$cmodes[0]}, $mode.$net->_out($act->{src}));
