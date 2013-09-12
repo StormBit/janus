@@ -115,6 +115,7 @@ sub register_nick {
 
 sub _request_nick {
 	my($net, $nick, $reqnick, $tagged) = @_;
+	$reqnick =~ s/\//\|/g if $reqnick =~ /\//g && $Janus::tagfix;
 	my $maxlen = $net->nicklen();
 	my $given = substr $reqnick, 0, $maxlen;
 	my $given_lc = $net->lc($given);
@@ -139,8 +140,7 @@ sub _request_nick {
 		$tagsep = $tagtest if $tagtest eq '_';
 		$reqnick =~ s/\//\|/g if $reqnick =~ /\//g && $tagtest eq '_';
 		# The shit I do to deal with multiple Januses:
-		#$reqnick =~ s/(\/[a-zA-Z0-9]+){2,}/-ln/g if $reqnick =~ /(\/[a-zA-Z0-9]+){2,}/g;
-		$reqnick =~ s/\//\|/g if $reqnick =~ /\//g && $Janus::tagfix;
+		$reqnick =~ s/(\/[a-zA-Z0-9]+){1,}/-ln/g if $reqnick =~ /(\/[a-zA-Z0-9]+){1,}/g;
 		my $tag = $tagsep . $nick->homenet()->name();
 		my $i = 0;
 		$given = substr($reqnick, 0, $maxlen - length $tag) . $tag;
