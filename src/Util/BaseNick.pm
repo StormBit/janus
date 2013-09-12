@@ -44,9 +44,6 @@ sub nick {
 sub request_nick {
 	my($net, $nick, $reqnick, $tagged) = @_;
 	my ($given,$given_lc);
-	# The shit I do to deal with multiple Januses:
-	#$reqnick =~ s/(\/[a-zA-Z0-9]+){2,}/-ln/g if $reqnick =~ /(\/[a-zA-Z0-9]+){2,}/g;
-	$reqnick =~ s/\//\|/g if $reqnick =~ /\//g && $Janus::tagfix;
 
 	if ($nick->homenet() eq $net) {
 		$given = $reqnick;
@@ -74,6 +71,9 @@ sub request_nick {
 			my $tagsep = $Janus::septag;
 			my $tag = $tagsep . $nick->homenet()->name();
 			my $i = 0;
+			# The shit I do to deal with multiple Januses:
+			#$reqnick =~ s/(\/[a-zA-Z0-9]+){2,}/-ln/g if $reqnick =~ /(\/[a-zA-Z0-9]+){2,}/g;
+			$reqnick =~ s/\//\|/g if $reqnick =~ /\//g && $Janus::tagfix;
 			$given = substr($reqnick, 0, $maxlen - length $tag) . $tag;
 			$given_lc = $net->lc($given);
 			while (exists $nicks[$$net]->{$given_lc}) {
