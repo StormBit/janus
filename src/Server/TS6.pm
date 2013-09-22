@@ -222,7 +222,7 @@ sub cmd2 {
 
 our %moddef = ();
 Janus::static('moddef');
-$moddef{CAPAB_HOPS} = { cmode => { h => 'n_halfop' } };
+#$moddef{CAPAB_HOPS} = { cmode => { h => 'n_halfop' } };
 $moddef{CAPAB_EX} = { cmode => { e => 'l_except' } };
 $moddef{CAPAB_IE} = { cmode => { I => 'l_invex' } };
 $moddef{CAPAB_TB} = {
@@ -432,8 +432,10 @@ $moddef{CORE} = {
 		l => 's_limit',
 		'm' => 'r_moderated',
 		n => 'r_mustjoin',
+		a => 'n_admin',
 		o => 'n_op',
-		p =>   't1_chanhide',
+		h => 'n_halfop',
+		p => 't1_chanhide',
 		r => 'r_reginvite',
 		's' => 't2_chanhide',
 		t => 'r_topic',
@@ -878,7 +880,7 @@ $moddef{CORE} = {
 			my $nmode = $1;
 			my $nick = $net->mynick($2) or next;
 			my %mh = map {
-				tr/@%+/ohv/;
+				tr/!@%+/aohv/;
 				$_ = $net->cmode2txt($_);
 				/^n_(.+)/ ? ($1 => 1) : ();
 			} split //, $nmode;
@@ -1052,8 +1054,8 @@ $moddef{CORE} = {
 				next unless $chan->is_on($net);
 				my $mode = join '', map {
 					$chan->has_nmode($_, $nick) ? ($net->txt2cmode("n_$_") || '') : ''
-				} qw/voice halfop op/;
-				$mode =~ tr/ohv/@%+/;
+				} qw/voice halfop op admin/;
+				$mode =~ tr/aohv/!@%+/;
 				my @cmodes = Modes::to_multi($net, Modes::dump($chan), 10);
 				@cmodes = (['+']) unless @cmodes && @{$cmodes[0]};
 
@@ -1103,7 +1105,7 @@ $moddef{CORE} = {
 		my $mode = '';
 		if ($act->{mode}) {
 			$mode .= ($net->txt2cmode("n_$_") || '') for keys %{$act->{mode}};
-			$mode =~ tr/ohv/@%+/;
+			$mode =~ tr/aohv/!@%+/;
 			my @cmodes = Modes::to_multi($net, Modes::dump($chan));
 			@cmodes = (['+']) unless @cmodes && @{$cmodes[0]};
 			return $net->ncmd(SJOIN => $chan->ts, $chan, @{$cmodes[0]}, $mode.$net->_out($act->{src}));

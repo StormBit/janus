@@ -100,8 +100,8 @@ sub intro {
 }
 
 my %def_c2t = (qw/
-	q n_op
-	a n_op
+	q n_owner
+	a n_admin
 	o n_op
 	h n_halfop
 	v n_voice
@@ -121,6 +121,8 @@ my %def_c2t = (qw/
 my %def_t2c;
 $def_t2c{$def_c2t{$_}} = $_ for keys %def_c2t;
 $def_t2c{n_op} = 'o';
+$def_t2c{n_admin} = 'a';
+$def_t2c{n_owner} = 'q';
 
 sub _init {
 	my $net = shift;
@@ -163,6 +165,8 @@ sub process_capabs {
 			}
 		}
 		$t2c{n_op} = 'o';
+		$t2c{n_admin} = 'a';
+		$t2c{n_owner} = 'q';
 		$txt2cmode[$$net] = \%t2c;
 		$cmode2txt[$$net] = \%c2t;
 	} else {
@@ -349,10 +353,10 @@ Event::setting_add({
 	help => 'Automatically rejoin channel when kicked (0|1)',
 	default => 1,
 }, {
-	name => 'cb_showevents',
+	name => 'cb_noshowevents',
 	type => __PACKAGE__,
-	help => 'Relay Join/Part/Quit/Nick events to ClientBot network (disable for busy nets) (0|1)',
-	default => 1,
+	help => 'Doesn\'t Relay Join/Part/Quit/Nick events to ClientBot network (Enable for busy nets) (0|1)',
+	default => 0,
 });
 
 sub dump_sendq {
@@ -415,11 +419,12 @@ sub nicklen { 31 }
 			$net->add_halfout([ 10, "JOIN $chan", 'JOIN', $chan ]);
 			();
 		} else {
-			return () unless Setting::get(cb_showevents => $net);
+			return () if Setting::get(cb_noshowevents => $net);
 			return () if $Janus::Burst;
+			return () if $act->{netsplit_quit};
 			my $id = $src->str($net).' ('.$src->info('ident').'@'.$src->info('vhost').')';
 			my $chan = $dst->str($net);
-			$net->cmd1(PRIVMSG => $dst, "Join: $id");
+			$net->cmd1(PRIVMSG => $dst, "$id has Joined $chan");
 		}
 	},
 	DELINK => sub {
@@ -457,8 +462,9 @@ sub nicklen { 31 }
 			my $chan = $dst->str($net);
 			"PART $chan :$act->{msg}";
 		} else {
-			return () unless Setting::get(cb_showevents => $net);
+			return () if Setting::get(cb_noshowevents => $net);
 			return () if $Janus::Burst;
+			return () if $act->{netsplit_quit};
 			$net->cmd1(PRIVMSG => $dst, $src->str($net).' has Left '.$dst->str($net).' ('.$act->{msg}.')');
 		}
 	},
@@ -467,8 +473,9 @@ sub nicklen { 31 }
 		my $nick = $act->{dst};
 		my @out;
 		for my $chan ($nick->all_chans()) {
-			next unless  Setting::get(cb_showevents => $net);
+			next if Setting::get(cb_noshowevents => $net);
 			next if $Janus::Burst;
+			next if $act->{netsplit_quit};
 			push @out, $net->cmd1(PRIVMSG => $chan, $nick->str($net).' has Quit ('.$act->{msg}.')');
 		}
 		@out;
@@ -479,8 +486,9 @@ sub nicklen { 31 }
 		my @out;
 		my $msg = $act->{from}->{$$net}.' is now known as '.$act->{to}->{$$net};
 		for my $chan ($nick->all_chans()) {
-			next unless  Setting::get(cb_showevents => $net);
+			next if Setting::get(cb_noshowevents => $net);
 			next if $Janus::Burst;
+			next if $act->{netsplit_quit};
 			push @out, $net->cmd1(PRIVMSG => $chan, $msg);
 		}
 		@out;
@@ -638,7 +646,7 @@ sub pm_not {
 			}
 		}
 		if ($_[1] eq 'PRIVMSG') {
-			$net->send("NOTICE $_[0] :Error: user not found. To message a user, prefix your message with their nick");
+		#	$net->send("NOTICE $_[0] :Error: user not found. To message a user, prefix your message with their nick");
 		} elsif ($_[1] eq 'NOTICE') {
 			if ($net->lc($_[0]) eq 'nickserv') {
 				if ($_[3] =~ /(registered|protected|identify)/i && $_[3] !~ / not /i) {
@@ -1018,7 +1026,6 @@ sub kicked {
 		}
 		$half_in[$$net] = undef;
 		my $chan = $net->chan($_[3]) or return ();
-		#return () unless $chan->get_mode('cb_topicsync');
 		return {
 			type => 'TOPIC',
 			topic => $h->[2],
@@ -1034,7 +1041,6 @@ sub kicked {
 		my $src = $net->item($_[0]) or return ();
 		my $chan = $net->chan($_[2]) or return ();
 		return () if $src == $Interface::janus;
-		#return () unless $chan->get_mode('cb_topicsync');
 		return {
 			type => 'TOPIC',
 			topic => $_[-1],
@@ -1075,7 +1081,9 @@ sub kicked {
 		$gecos =~ s/^\d+\s//; # remove server hop count
 		my @out = $net->cli_hostintro($_[7], $_[4], $_[5], $gecos);
 		my %mode;
-		$mode{op} = 1 if $_[8] =~ /[~&\@]/;
+		$mode{op} = 1 if $_[8] =~ /\@/;
+		$mode{admin} = 1 if $_[8] =~ /&/;
+		$mode{owner} = 1 if $_[8] =~ /~/;
 		$mode{halfop} = 1 if $_[8] =~ /\%/;
 		$mode{voice} = 1 if $_[8] =~ /\+/;
 		push @out, +{

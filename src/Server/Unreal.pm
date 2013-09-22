@@ -884,7 +884,7 @@ $moddef{CORE} = {
 				altnick => 1,
 			};
 		} else {
-			Log::err_in($net, "Ignoring SVSNICK on already tagged nick\n");
+			Log::warn_in($net, "Ignoring SVSNICK on already tagged nick\n");
 			return ();
 		}
 	}, UMODE2 => sub {
@@ -969,7 +969,7 @@ $moddef{CORE} = {
 		my $ts = $net->sjbint($_[2]);
 		if ($ts == 0) {
 			$ts = 42;
-			Log::err_in($net, 'Broken (zero) timestamp on '.$_[3]);
+			Log::warn_in($net, 'Broken (zero) timestamp on '.$_[3]);
 		}
 		my $chan = $net->chan($_[3], $ts);
 		my $applied = ($chan->ts() >= $ts);
@@ -1133,6 +1133,7 @@ $moddef{CORE} = {
 	KNOCK => \&todo,
 
 # Server actions
+	__PANGPANG__ => \&ignore,
 	SERVER => sub {
 		my $net = shift;
 		# :src SERVER name hopcount [numeric] description
@@ -1459,7 +1460,7 @@ $moddef{CORE} = {
 		my($net,$act) = @_;
 		my $chan = $act->{dst};
 		if ($act->{src}->homenet eq $net) {
-			Log::err_in($net, 'Trying to force channel join remotely ('.$act->{src}->gid().$chan->str($net).")");
+			Log::warn_in($net, 'Trying to force channel join remotely ('.$act->{src}->gid().$chan->str($net).")");
 			return ();
 		}
 		my $sj = '';

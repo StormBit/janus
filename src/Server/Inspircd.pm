@@ -766,6 +766,8 @@ $moddef{CORE} = {
 			msg => 'ERROR: '.$_[-1],
 		};
 	},
+	MOTD => \&ignore,
+	KNOCK => \&ignore,
 	VERSION => \&ignore,
 	ADDLINE => sub {
 		my $net = shift;
@@ -946,6 +948,7 @@ $moddef{CORE} = {
 		();
 	},
 	TIMESET => \&ignore,
+	ALLTIME => \&ignore,
 
 # from m_globalload.so, included so that dynamic module loading always works
 	GLOADMODULE => sub {

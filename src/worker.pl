@@ -18,7 +18,7 @@ BEGIN {
 	do './src/Janus.pm' or die $@;
 }
 
-our $VERSION = '1.14';
+our $VERSION = '1.12';
 
 # control socket on stdin, needs to be read/write
 open $Multiplex::sock, '+>&=0';

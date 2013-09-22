@@ -2,6 +2,7 @@
 # Copyright (C) 2007-2009 Daniel De Graaf
 # Modificiations (C) 2011 - 2012 Brenton Edgar Scott
 # Released under the GNU Affero General Public License v3
+# GL is awesome and I can get away with this kind of shit
 use strict;
 use warnings;
 BEGIN {
@@ -44,10 +45,13 @@ unless (%Conffile::netconf) {
 	exit 1;
 }
 
+my $mplexdaemon = 'c-src/multiplex';
+$mplexdaemon = 'c-src/multiplex.exe' if $^O eq 'cygwin';
+
 my $runmode = $Conffile::netconf{set}{runmode};
 $runmode = 'debug' if $^P;
 unless ($runmode) {
-	if (-x 'c-src/multiplex') {
+	if (-x $mplexdaemon) {
 		$runmode = 'mplex-daemon';
 	} else {
 		$runmode = 'uproc-daemon';
@@ -76,7 +80,7 @@ if ($runmode =~ s/-daemon$//) {
 }
 
 if ($runmode eq 'mplex') {
-	exec { './c-src/multiplex' } 'janus', @ARGV;
+	exec { $mplexdaemon } 'janus', @ARGV;
 	exit 1;
 }
 
