@@ -413,6 +413,8 @@ $moddef{CHARYBDIS} = {
 			},
 		},
 		REHASH => \&ignore,
+		CERTFP => \&ignore,
+		MLOCK => \&ignore,
 		SASL => \&ignore,
 		SNOTE => \&ignore,
 		SVSLOGIN => \&ignore,
