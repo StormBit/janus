@@ -47,7 +47,8 @@ sub nick_msg {
 }
 
 sub nicklen {
-	31 # TODO any way to tell?
+	50
+    #Set to the absolute maximum to avoid hard-coding a too low value
 }
 
 sub lc {

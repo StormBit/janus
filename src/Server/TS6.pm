@@ -47,7 +47,7 @@ sub nick_msg {
 }
 
 sub nicklen {
-	31 # TODO any way to tell?
+	50
 }
 
 sub lc {
