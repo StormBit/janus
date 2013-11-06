@@ -1,7 +1,7 @@
 # Copyright (C) 2007-2009 Daniel De Graaf
 # Modificiations (C) 2011 - 2012 Brenton Edgar Scott
 # Released under the GNU Affero General Public License v3
-package Server::TS6;
+package Server::Elemental;
 use Nick;
 use Modes;
 use Util::BaseUID;
