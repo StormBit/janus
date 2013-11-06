@@ -222,7 +222,7 @@ sub cmd2 {
 
 our %moddef = ();
 Janus::static('moddef');
-#$moddef{CAPAB_HOPS} = { cmode => { h => 'n_halfop' } };
+$moddef{CAPAB_HOPS} = { cmode => { h => 'n_halfop' } };
 $moddef{CAPAB_EX} = { cmode => { e => 'l_except' } };
 $moddef{CAPAB_IE} = { cmode => { I => 'l_invex' } };
 $moddef{CAPAB_TB} = {
@@ -434,10 +434,9 @@ $moddef{CORE} = {
 		l => 's_limit',
 		'm' => 'r_moderated',
 		n => 'r_mustjoin',
-		q => 'n_owner',
+#		q => 'n_owner',
 		a => 'n_admin',
 		o => 'n_op',
-		h => 'n_halfop',
 		p => 't1_chanhide',
 		r => 'r_reginvite',
 		's' => 't2_chanhide',
