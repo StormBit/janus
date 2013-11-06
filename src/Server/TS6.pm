@@ -883,7 +883,7 @@ $moddef{CORE} = {
 			my $nmode = $1;
 			my $nick = $net->mynick($2) or next;
 			my %mh = map {
-				tr/~!@%+/qaohv/;
+				tr/~!@%+/yaohv/;
 				$_ = $net->cmode2txt($_);
 				/^n_(.+)/ ? ($1 => 1) : ();
 			} split //, $nmode;
@@ -1058,7 +1058,7 @@ $moddef{CORE} = {
 				my $mode = join '', map {
 					$chan->has_nmode($_, $nick) ? ($net->txt2cmode("n_$_") || '') : ''
 				} qw/voice halfop op admin owner/;
-				$mode =~ tr/qaohv/~!@%+/;
+				$mode =~ tr/yaohv/~!@%+/;
 				my @cmodes = Modes::to_multi($net, Modes::dump($chan), 10);
 				@cmodes = (['+']) unless @cmodes && @{$cmodes[0]};
 
@@ -1108,7 +1108,7 @@ $moddef{CORE} = {
 		my $mode = '';
 		if ($act->{mode}) {
 			$mode .= ($net->txt2cmode("n_$_") || '') for keys %{$act->{mode}};
-			$mode =~ tr/qaohv/~!@%+/;
+			$mode =~ tr/yaohv/~!@%+/;
 			my @cmodes = Modes::to_multi($net, Modes::dump($chan));
 			@cmodes = (['+']) unless @cmodes && @{$cmodes[0]};
 			return $net->ncmd(SJOIN => $chan->ts, $chan, @{$cmodes[0]}, $mode.$net->_out($act->{src}));
