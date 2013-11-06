@@ -212,7 +212,7 @@ mdef 'm_httpd.so';
 mdef 'm_httpd_stats.so';
 mdef 'm_ident.so';
 
-mdef 'm_invisible.so', umode => { Q => '' };
+# TODO kill link on m_invisible being loaded
 mdef 'm_inviteexception.so', cmode => { I => 'l_invex' };
 
 mdef 'm_janus.so', acts => {
