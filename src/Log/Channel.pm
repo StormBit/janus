@@ -39,11 +39,6 @@ sub output {
 		msgtype => 'PRIVMSG',
 		msg => $_
 	}, split /[\r\n]+/, $msg);
-	Event::insert_full(map +{
-		type => 'JOIN',
-		dst => $chan,
-		src => $Interface::janus,
-	}	
 	$loop = 0;
 }
 
