@@ -147,7 +147,7 @@ sub read_conf {
 		}
 	}
 	unless ($Janus::tagfix) {
-		my $tagfix = $newconf{set}{tagfix} || 0;
+		my $tagfix = $newconf{set}{tagfix} || 1;
 		if ($tagfix == 1 or $tagfix == 0) {
 			$Janus::tagfix = $tagfix;
 		} else {
