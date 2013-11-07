@@ -115,7 +115,7 @@ sub register_nick {
 
 sub _request_nick {
 	my($net, $nick, $reqnick, $tagged) = @_;
-	$reqnick =~ s/\//\|/g if $reqnick =~ /\//g;
+	$reqnick =~ s/\//\|/g;
 	my $maxlen = $net->nicklen();
 	my $given = substr $reqnick, 0, $maxlen;
 	my $given_lc = $net->lc($given);
@@ -139,7 +139,7 @@ sub _request_nick {
 		my $tagtest = Setting::get(tagsep => $net);
 		my $tag = $tagsep . $nick->homenet()->name();
 		my $i = 0;
-		$reqnick =~ s/\//\|/g if $reqnick =~ /\//g;
+		$reqnick =~ s/\//\|/g;
 		$given = substr($reqnick, 0, $maxlen - length $tag) . $tag;
 		$given_lc = $net->lc($given);
 		while (exists $nick2uid[$$net]->{$given_lc}) {
