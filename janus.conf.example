@@ -230,6 +230,12 @@ link u3 {
 # (protocol details, module list, etc are autonegotiated on connect)
 link i1 {
 	type Inspircd
+	# Considering the configurable nature of InspIRCd,
+	# the ability to toggle the owner and admin modes
+	# was needed. The default for chanprotect is yes
+	# for the best compatibilty, but it can be disabled
+	# by uncommenting the following:
+	#chanprotect no
 	linkaddr 4.2.2.2
 	linkport 8003
 	linktype plain
@@ -245,7 +251,7 @@ link ts6 {
 	type TS6
 	# Considering the configurable nature of TS6 IRCds,
 	# especially ones like Elemental-IRCd, the ability
-	# to toggle the owner and admin modes were needed.
+	# to toggle the owner and admin modes ywas needed.
 	# They default to no for the best compatibilty, but
 	# you can enable them by uncommenting the following:
 	#use_owner yes
