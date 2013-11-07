@@ -235,7 +235,7 @@ link i1 {
 	# was needed. The default for chanprotect is yes
 	# for the best compatibilty, but it can be disabled
 	# by uncommenting the following:
-	#chanprotect no
+	#use_chanprotect no
 	linkaddr 4.2.2.2
 	linkport 8003
 	linktype plain
