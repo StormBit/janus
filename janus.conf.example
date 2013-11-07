@@ -248,6 +248,13 @@ link i1 {
 # See the protocol module names in src/Server/
 link ts6 {
 	type TS6
+	# Considering the configurable nature of TS6 IRCds,
+	# especially ones like Elemental-IRCd, the ability
+	# to toggle the owner and admin modes were needed.
+	# They default to no for the best compatibilty, but
+	# you can enable them by uncommenting the following:
+	#use_owner yes
+	#use_admin yes
 	linkaddr 4.2.2.2
 	linkport 1234
 	linktype plain
