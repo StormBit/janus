@@ -223,6 +223,10 @@ sub cmd2 {
 our %moddef = ();
 Janus::static('moddef');
 $moddef{CAPAB_HOPS} = { cmode => { h => 'n_halfop' } };
+my $use_owner = lc $net->cparam('use_owner') || 'no';
+my $use_admin = lc $net->cparam('use_admin') || 'no';
+if ($use_owner eq 'yes') { cmode => { y => 'n_owner' } };
+if ($use_admin eq 'yes') { cmode => { a => 'n_admin' } };
 $moddef{CAPAB_EX} = { cmode => { e => 'l_except' } };
 $moddef{CAPAB_IE} = { cmode => { I => 'l_invex' } };
 $moddef{CAPAB_TB} = {
@@ -436,8 +440,6 @@ $moddef{CORE} = {
 		l => 's_limit',
 		'm' => 'r_moderated',
 		n => 'r_mustjoin',
-#		y => 'n_owner',
-		a => 'n_admin',
 		o => 'n_op',
 		p => 't1_chanhide',
 		r => 'r_reginvite',
