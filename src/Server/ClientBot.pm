@@ -100,6 +100,7 @@ sub intro {
 }
 
 my %def_c2t = (qw/
+#	y n_owner
 #	q n_owner
 	a n_admin
 	o n_op
@@ -123,6 +124,7 @@ $def_t2c{$def_c2t{$_}} = $_ for keys %def_c2t;
 $def_t2c{n_op} = 'o';
 $def_t2c{n_admin} = 'a';
 #$def_t2c{n_owner} = 'q';
+#$def_t2c{n_owner} = 'y';
 
 sub _init {
 	my $net = shift;
@@ -167,6 +169,7 @@ sub process_capabs {
 		$t2c{n_op} = 'o';
 		$t2c{n_admin} = 'a';
 #		$t2c{n_owner} = 'q';
+#		$t2c{n_owner} = 'y';
 		$txt2cmode[$$net] = \%t2c;
 		$cmode2txt[$$net] = \%c2t;
 	} else {
@@ -1081,7 +1084,7 @@ sub kicked {
 		$gecos =~ s/^\d+\s//; # remove server hop count
 		my @out = $net->cli_hostintro($_[7], $_[4], $_[5], $gecos);
 		my %mode;
-#		$mode{owner} = 1 if $_[8] =~ /~/;
+		$mode{owner} = 1 if $_[8] =~ /~/;
 		$mode{admin} = 1 if $_[8] =~ /&/;
 		$mode{admin} = 1 if $_[8] =~ /!/;
 		$mode{op} = 1 if $_[8] =~ /\@/;
