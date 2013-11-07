@@ -68,8 +68,8 @@ sub intro {
 	Setting::set(tagsep => $net, '|') if $sep eq '/';
 	my $use_owner = lc $net->cparam('use_owner') || 'no';
 	my $use_admin = lc $net->cparam('use_admin') || 'no';
-	if ($use_owner eq 'yes') { cmode => { y => 'n_owner' } };
-	if ($use_admin eq 'yes') { cmode => { a => 'n_admin' } };
+	if ($use_owner eq 'yes') { $net->module_add('OWNER', 1); };
+	if ($use_admin eq 'yes') { $net=>module_add('ADMIN', 1); };
 
 	#my $ircd = $net->cparam('ircd');
 	# Let's default to charybdis/ratbox features!
@@ -228,6 +228,8 @@ sub cmd2 {
 our %moddef = ();
 Janus::static('moddef');
 $moddef{CAPAB_HOPS} = { cmode => { h => 'n_halfop' } };
+$moddef{OWNER} = { cmode => { y => 'n_owner' } };
+$moddef{ADMIN} = { cmode => { a => 'n_admin' } };
 $moddef{CAPAB_EX} = { cmode => { e => 'l_except' } };
 $moddef{CAPAB_IE} = { cmode => { I => 'l_invex' } };
 $moddef{CAPAB_TB} = {
