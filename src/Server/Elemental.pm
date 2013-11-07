@@ -67,10 +67,10 @@ sub intro {
 	$net->SUPER::intro(@param);
 	my $sep = $Janus::septag;
 	Setting::set(tagsep => $net, '|') if $sep eq '/';
-	my $use_owner = lc $net->cparam('use_owner') || 'no';
-	my $use_admin = lc $net->cparam('use_admin') || 'no';
-	if ($use_owner eq 'yes') { $net->module_add('OWNER', 1); };
-	if ($use_admin eq 'yes') { $net->module_add('ADMIN', 1); };
+	my $use_owner = lc $net->cparam('use_owner') || 'yes';
+	my $use_admin = lc $net->cparam('use_admin') || 'yes';
+	unless ($use_owner eq 'no') { $net->module_add('OWNER', 1); };
+	unless ($use_admin eq 'no') { $net->module_add('ADMIN', 1); };
 
 	#my $ircd = $net->cparam('ircd');
 	# Let's default to charybdis/ratbox features!
