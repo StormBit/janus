@@ -76,11 +76,6 @@ set {
 	# / to | because it's an unsupported nickname character.
 	#septag /
 
-	# Fix Tagging - This will correct issues with TS6 servers when linking to networks
-	# that use multiple Januses rather than using InterJanus. This should resolve the 
-	# vague nicklen error caused by the use of the / character in nicknames.
-	#tagfix 1
-
 	# Forced Network Tagging - This will force network tags for all users
 	# connected via janus to your network and may resolve common nickname
 	# collision issues.
