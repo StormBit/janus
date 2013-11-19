@@ -427,7 +427,7 @@ $moddef{CHARYBDIS} = {
 		SASL => \&ignore,
 		SNOTE => \&ignore,
 		SVSLOGIN => \&ignore,
-
+		SVSJOIN => \&ignore,
 # TODO:
 		DLINE => \&ignore,
 		NICKDELAY => \&ignore, # act like SVSNICK?
