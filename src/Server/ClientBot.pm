@@ -184,7 +184,7 @@ sub txt2cmode {
 }
 
 sub lc {
-	CORE::lc $_[1];
+	CORE::lc($_[1] || "");
 }
 
 sub cli_hostintro {
@@ -990,6 +990,7 @@ sub kicked {
 	# MOTD
 	375 => \&ignore,
 	372 => \&ignore,
+	396 => \&ignore,
 	376 => sub { # end of MOTD
 		my $net = shift;
 		my $curr = $half_out[$$net][0];

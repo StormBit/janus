@@ -115,7 +115,7 @@ sub read_conf {
 		return;
 	}
 	unless ($Janus::janus_type) {
-		my $jtype = lc $newconf{set}{janus_type} || 'privmsg';
+		my $jtype = lc($newconf{set}{janus_type} || 'privmsg');
 		if ($jtype eq 'privmsg') {
 			$Janus::janus_type = 'PRIVMSG';
 		} elsif ($jtype eq 'notice') {
@@ -129,7 +129,7 @@ sub read_conf {
 		$Janus::Burst = 1;
 	}
 	unless ($Janus::laddy) {
-		my $laddy = lc $newconf{set}{laddy} || 'janus';
+		my $laddy = lc($newconf{set}{laddy} || 'janus');
 		if ($laddy) {
 			$Janus::laddy = '.'.$laddy;
 		} else {
@@ -183,7 +183,7 @@ sub read_conf {
 		}
 	}
 	unless ($Janus::linkreq) {
-		my $lreq = lc $newconf{set}{linkreq} || 'owner';
+		my $lreq = lc($newconf{set}{linkreq} || 'owner');
 		if ($lreq eq 'owner') {
 			$Janus::linkreq = 'owner';
 		} elsif ($lreq eq 'op') {
@@ -196,7 +196,7 @@ sub read_conf {
 		}
 	}
 	unless ($Janus::lmode) {
-		my $mode = lc $newconf{set}{lmode} || 'link';
+		my $mode = lc($newconf{set}{lmode} || 'link');
 		if ($mode eq 'link') {
 			Janus::load('Link');
 		} elsif ($mode eq 'bridge') {

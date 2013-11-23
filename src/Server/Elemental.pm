@@ -429,6 +429,7 @@ $moddef{CHARYBDIS} = {
 		SNOTE => \&ignore,
 		SVSLOGIN => \&ignore,
 		SVSJOIN => \&ignore,
+		METADATA => \&ignore,
 # TODO:
 		DLINE => \&ignore,
 		NICKDELAY => \&ignore, # act like SVSNICK?
