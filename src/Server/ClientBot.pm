@@ -100,8 +100,6 @@ sub intro {
 }
 
 my %def_c2t = (qw/
-#	y n_owner
-#	q n_owner
 	a n_admin
 	o n_op
 	h n_halfop
@@ -123,8 +121,6 @@ my %def_t2c;
 $def_t2c{$def_c2t{$_}} = $_ for keys %def_c2t;
 $def_t2c{n_op} = 'o';
 $def_t2c{n_admin} = 'a';
-#$def_t2c{n_owner} = 'q';
-#$def_t2c{n_owner} = 'y';
 
 sub _init {
 	my $net = shift;

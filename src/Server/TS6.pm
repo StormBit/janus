@@ -66,8 +66,8 @@ sub intro {
 	$net->SUPER::intro(@param);
 	my $sep = $Janus::septag;
 	Setting::set(tagsep => $net, '|') if $sep eq '/';
-	my $use_owner = lc $net->cparam('use_owner') || 'no';
-	my $use_admin = lc $net->cparam('use_admin') || 'no';
+	my $use_owner = lc($net->cparam('use_owner') || 'no');
+	my $use_admin = lc($net->cparam('use_admin') || 'no');
 	if ($use_owner eq 'yes') { $net->module_add('OWNER', 1); };
 	if ($use_admin eq 'yes') { $net->module_add('ADMIN', 1); };
 
