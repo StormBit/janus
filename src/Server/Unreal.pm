@@ -1158,7 +1158,7 @@ $moddef{CORE} = {
 			my $systime = time();
 			$rawout[$$net] = "PASS :$pass\r\n".
 				'PROTOCTL NOQUIT TOKEN NICKv2 CLK NICKIP SJOIN SJOIN2 SJ3 VL NS UMODE2 TKLEXT SJB64'.
-				"\r\nSERVER $server 1 :U2309-hX6eE-$num Janus Network Link\r\n"
+				"\r\nSERVER $server 1 :U2309-hX6eE-$num Janus Network Link\r\n".
 				"NETINFO 100 $systime 2309 * 0 0 0 :JanusLink\r\n".$rawout[$$net];
 		}
 		Log::info_in($net, "Server $_[2] [\@$snum] added from $src");
