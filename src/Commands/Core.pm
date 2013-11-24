@@ -153,8 +153,8 @@ Event::command_add({
 	syntax => "[<command>|\002ALL\002]",
 	code => sub {
 		my($src,$dst,$item) = @_;
-		$item = lc $item || '';
-		if (exists $Event::commands{lc $item}) {
+		$item = lc($item || '');
+		if (exists $Event::commands{lc($item || '')}) {
 			my $det = $Event::commands{$item}{details};
 			my $syn = $Event::commands{$item}{syntax};
 			my $help = $Event::commands{$item}{help};
