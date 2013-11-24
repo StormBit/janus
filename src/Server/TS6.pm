@@ -51,7 +51,7 @@ sub nicklen {
 }
 
 sub lc {
-	my $o = $_[1];
+	my $o = $_[1] || '';
 	$o =~ tr#A-Z[]\\#a-z{}|#;
 	$o;
 }
@@ -891,7 +891,7 @@ $moddef{CORE} = {
 			my $nick = $net->mynick($2) or next;
 			my %mh = map {
 				tr/~!@%+/yaohv/;
-				$_ = $net->cmode2txt($_);
+				$_ = $net->cmode2txt($_ || '');
 				/^n_(.+)/ ? ($1 => 1) : ();
 			} split //, $nmode;
 			push @acts, +{

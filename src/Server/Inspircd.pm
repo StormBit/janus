@@ -39,7 +39,7 @@ sub str {
 sub intro {
 	my($net,@param) = @_;
 	$net->SUPER::intro(@param);
-	my $use_chanprotect = lc $net->cparam('use_chanprotect') || 'yes';
+	my $use_chanprotect = CORE::lc($net->cparam('use_chanprotect') || 'yes');
 	unless ($use_chanprotect eq 'no') { $net->module_add('CHANPROTECT', 1); };
 	my @out;
 	$sendq1[$$net] .= "CAPAB START\r\n";
@@ -248,7 +248,7 @@ sub protoctl {
 }
 
 sub lc {
-	my $o = $_[1];
+	my $o = $_[1] || '';
 	$o =~ tr#A-Z[]\\#a-z{}|#;
 	$o;
 }

@@ -159,7 +159,8 @@ sub replace_chan {
 	my($net,$name,$new) = @_;
 	$name = $net->lc($name);
 	my $old = $chans[$$net]{$name};
-	warn "replacing nonexistant channel" unless $old;
+	# This is really a useless thing to say about unlinked channels...
+	# warn "replacing nonexistant channel" unless $old;
 	if (defined $new) {
 		$chans[$$net]{$name} = $new;
 	} else {

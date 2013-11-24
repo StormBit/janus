@@ -140,7 +140,7 @@ my $textip_table = join '', 'A'..'Z','a'..'z', 0 .. 9, '+/';
 sub nicklen { 30 }
 
 sub lc {
-	CORE::lc $_[1];
+	CORE::lc $_[1] || '';
 }
 
 sub request_nick {
