@@ -991,6 +991,7 @@ sub kicked {
 	375 => \&ignore,
 	372 => \&ignore,
 	396 => \&ignore,
+	412 => \&ignore,
 	376 => sub { # end of MOTD
 		my $net = shift;
 		my $curr = $half_out[$$net][0];
