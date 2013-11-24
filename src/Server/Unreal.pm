@@ -1153,13 +1153,14 @@ $moddef{CORE} = {
 
 		if ($net->auth_should_send) {
 			my $server = $net->cparam('linkname');
+			my $netname = $net->cparam('netname');
 			my $pass = $net->cparam('sendpass');
 			my $num = $net->numeric_for($net);
 			my $systime = time();
 			$rawout[$$net] = "PASS :$pass\r\n".
 				'PROTOCTL NOQUIT TOKEN NICKv2 CLK NICKIP SJOIN SJOIN2 SJ3 VL NS UMODE2 TKLEXT SJB64'.
 				"\r\nSERVER $server 1 :U2309-hX6eE-$num Janus Network Link\r\n".
-				"NETINFO 100 $systime 2309 * 0 0 0 :JanusLink\r\n".$rawout[$$net];
+				"NETINFO 100 $systime 2309 * 0 0 0 :$netname\r\n".$rawout[$$net];
 		}
 		Log::info_in($net, "Server $_[2] [\@$snum] added from $src");
 		$servers[$$net]{$name} = {
