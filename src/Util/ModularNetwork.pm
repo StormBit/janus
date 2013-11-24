@@ -137,7 +137,8 @@ sub umode2txt {
 	my($net,$um,$ok) = @_;
 	my $t = $umode2txt[$$net]{$um};
 	if (!defined $t && !$ok) {
-		Log::warn_in($net, "Unknown umode '$um'");
+	# Redundency is fun :D
+	#	Log::warn_in($net, "Unknown umode '$um'");
 		$t = '';
 	}
 	$t;

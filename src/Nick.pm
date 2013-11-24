@@ -151,7 +151,8 @@ return true if the nick has the given umode
 sub has_mode {
 	my $nick = $_[0];
 	my $b = $umodebit{$_[1]} or do {
-		warn "Unknown umode $_[1]";
+		# This is a bit redundent...
+		# warn "Unknown umode $_[1]";
 		return 0;
 	};
 	return $mode[$$nick] & $b;

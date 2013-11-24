@@ -118,13 +118,13 @@ sub from_irc {
 			if ($txt =~ s/^t(\d+)/r/) {
 				$arg = $1;
 			} else {
-				Log::warn_in($net, "Invalid mode text $txt for mode $_ in network $net");
+			#	Log::warn_in($net, "Invalid mode text $txt for mode $_ in network $net");
 				next;
 			}
 		} elsif ($type eq 'r') {
 			$arg = 1;
 		} else {
-			Log::warn_in($net, "Invalid mode text $txt for mode $_ in network $net");
+		#	Log::warn_in($net, "Invalid mode text $txt for mode $_ in network $net");
 			next;
 		}
 		next if 3 > length $txt;
