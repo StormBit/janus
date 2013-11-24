@@ -547,7 +547,7 @@ sub sendto {
 sub real_keyname {
 	my $chan = shift;
 	my $hn = $homenet[$$chan];
-	my $name = $chan->lstr($hn);
+	my $name = $chan->lstr($hn) || '';
 	$hn->gid . $name; 
 }
 
