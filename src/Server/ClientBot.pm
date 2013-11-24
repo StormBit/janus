@@ -184,7 +184,7 @@ sub txt2cmode {
 }
 
 sub lc {
-	CORE::lc($_[1] || "");
+	CORE::lc($_[1] || '');
 }
 
 sub cli_hostintro {

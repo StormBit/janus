@@ -52,7 +52,7 @@ my @cfiles = qw(multiplex.c queue.c);
 
 my $gnutls = `pkg-config gnutls --modversion 2>/dev/null`;
 if (@ARGV && $ARGV[0] =~ /nossl/) {
-	$gnutls = "";
+	$gnutls = '';
 }
 
 if ($gnutls) {
