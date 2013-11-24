@@ -157,7 +157,7 @@ sub request_newnick {
 	my($net, $nick, $reqnick, $tagged) = @_;
 	my($given,$glc) = _request_nick(@_);
 	my $uid = $net->next_uid($nick->homenet());
-	Log::debug_in($net, "Registering nick #$$nick as uid $uid with nick $given");
+	Log::debug_in($net, "Registering #$$nick as uid $uid with nick $given");
 	$uids[$$net]{uc $uid} = $nick;
 	$nick2uid[$$net]{$glc} = $uid;
 	$gid2uid[$$net]{$nick->gid()} = $uid;
