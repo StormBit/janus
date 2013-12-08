@@ -31,7 +31,7 @@ sub mynick {
 	}
 	my $nick = $uids[$$net]{uc $name};
 	unless ($nick) {
-		Log::warn_in($net, "UID '$name' does not exist; ignoring");
+		Log::debug_in($net, "UID '$name' does not exist; ignoring");
 		return undef;
 	}
 	if ($nick->homenet() ne $net) {
@@ -50,7 +50,7 @@ sub nick {
 		$name = $nick2uid[$$net]{$name} || $name;
 	}
 	return $uids[$$net]{uc $name} if $uids[$$net]{uc $name};
-	Log::warn_in($net, "UID '$name' does not exist; ignoring") unless $_[2];
+	Log::debug_in($net, "UID '$name' does not exist; ignoring") unless $_[2];
 	undef;
 }
 
