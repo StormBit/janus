@@ -1318,6 +1318,7 @@ $moddef{CORE} = {
 	SAJOIN => \&ignore,
 	SAPART => \&ignore,
 	SILENCE => \&ignore,
+	SMONITOR => \&ignore,
 	SVSJOIN => \&ignore,
 	SVSLUSERS => \&ignore,
 	SVSNOOP => \&ignore,
