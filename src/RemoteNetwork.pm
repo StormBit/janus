@@ -38,7 +38,7 @@ sub chan {
 sub lc {
 	my($net, $o) = @_;
 	if ($type[$$net] eq 'Server::Unreal' || $type[$$net] eq 'Server::ClientBot') {
-		$o = lc $o;
+		$o = CORE::lc $o;
 	} else {
 		$o =~ tr#A-Z[]\\#a-z{}|#;
 	}
