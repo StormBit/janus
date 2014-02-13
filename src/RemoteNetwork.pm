@@ -1,5 +1,5 @@
 # Copyright (C) 2007-2009 Daniel De Graaf
-# Modificiations (C) 2011 - 2012 Brenton Edgar Scott
+# Modificiations (C) 2011 - 2014 Brenton Edgar Scott
 # Released under the GNU Affero General Public License v3
 package RemoteNetwork;
 use Network;
@@ -37,11 +37,12 @@ sub chan {
 
 sub lc {
 	my($net, $o) = @_;
-	if ($type[$$net] eq 'Server::Unreal' || $type[$$net] eq 'Server::ClientBot') {
-		$o = CORE::lc $o;
-	} else {
-		$o =~ tr#A-Z[]\\#a-z{}|#;
-	}
+#	if ($type[$$net] eq 'Server::Unreal' || $type[$$net] eq 'Server::ClientBot') {
+#		$o = CORE::lc $o;
+#	} else {
+#		$o =~ tr#A-Z[]\\#a-z{}|#;
+#	}
+	$o =~ tr#A-Z[]\\#a-z{}|#;
 	$o;
 }
 
