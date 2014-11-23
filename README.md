@@ -11,7 +11,7 @@ Instructions:
 
 1. Ask yourself: do you *really* want to be using this still?
 2. Run the following: 
-  * Clone the repository: `git clone https://github.com/GLolol/janus2`
+  * Clone the repository: `git clone https://github.com/GLolol/janus`
   * Run `./configure`
   * Write your configuration.
   * Run janus: `./janus`
