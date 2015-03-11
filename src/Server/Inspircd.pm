@@ -1,5 +1,5 @@
 # Copyright (C) 2007-2009 Daniel De Graaf
-# Modificiations (C) 2011 - 2012 Brenton Edgar Scott
+# Modificiations (C) 2011 - 2014 Brenton Edgar Scott
 # Released under the GNU Affero General Public License v3
 package Server::Inspircd;
 use Nick;
@@ -39,6 +39,8 @@ sub str {
 sub intro {
 	my($net,@param) = @_;
 	$net->SUPER::intro(@param);
+	my $use_chanprotect = CORE::lc($net->cparam('use_chanprotect') || 'yes');
+	unless ($use_chanprotect eq 'no') { $net->module_add('CHANPROTECT', 1); };
 	my @out;
 	$sendq1[$$net] .= "CAPAB START\r\n";
 	# we cannot continue until we get the remote CAPAB list so we can
@@ -246,7 +248,7 @@ sub protoctl {
 }
 
 sub lc {
-	my $o = $_[1];
+	my $o = $_[1] || '';
 	$o =~ tr#A-Z[]\\#a-z{}|#;
 	$o;
 }
@@ -303,12 +305,16 @@ $moddef{CAPAB_HALFOP} = {
 		h => 'n_halfop',
 	}
 };
+$moddef{CHANPROTECT} = {
+	cmode => {
+		a => 'n_admin',
+		q => 'n_owner',
+	}
+};
 $moddef{CORE} = {
   cmode => {
 		v => 'n_voice',
 		o => 'n_op',
-		a => 'n_admin',
-		q => 'n_owner',
 		b => 'l_ban',
 		i => 'r_invite',
 		k => 'v_key',

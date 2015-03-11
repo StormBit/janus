@@ -1,5 +1,5 @@
 # Copyright (C) 2007-2009 Daniel De Graaf
-# Modificiations (C) 2011 - 2012 Brenton Edgar Scott
+# Modificiations (C) 2011 - 2014 Brenton Edgar Scott
 # Released under the GNU Affero General Public License v3
 package LocalNetwork;
 use Network;
@@ -159,7 +159,8 @@ sub replace_chan {
 	my($net,$name,$new) = @_;
 	$name = $net->lc($name);
 	my $old = $chans[$$net]{$name};
-	warn "replacing nonexistant channel" unless $old;
+	# This is really a useless thing to say about unlinked channels...
+	# warn "replacing nonexistant channel" unless $old;
 	if (defined $new) {
 		$chans[$$net]{$name} = $new;
 	} else {

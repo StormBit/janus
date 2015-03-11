@@ -1,5 +1,5 @@
 # Copyright (C) 2007-2009 Daniel De Graaf
-# Modificiations (C) 2011 - 2012 Brenton Edgar Scott
+# Modificiations (C) 2011 - 2014 Brenton Edgar Scott
 # Released under the GNU Affero General Public License v3
 package Server::ClientBot;
 use LocalNetwork;
@@ -100,7 +100,6 @@ sub intro {
 }
 
 my %def_c2t = (qw/
-	q n_owner
 	a n_admin
 	o n_op
 	h n_halfop
@@ -122,7 +121,6 @@ my %def_t2c;
 $def_t2c{$def_c2t{$_}} = $_ for keys %def_c2t;
 $def_t2c{n_op} = 'o';
 $def_t2c{n_admin} = 'a';
-$def_t2c{n_owner} = 'q';
 
 sub _init {
 	my $net = shift;
@@ -166,7 +164,8 @@ sub process_capabs {
 		}
 		$t2c{n_op} = 'o';
 		$t2c{n_admin} = 'a';
-		$t2c{n_owner} = 'q';
+#		$t2c{n_owner} = 'q';
+#		$t2c{n_owner} = 'y';
 		$txt2cmode[$$net] = \%t2c;
 		$cmode2txt[$$net] = \%c2t;
 	} else {
@@ -185,7 +184,7 @@ sub txt2cmode {
 }
 
 sub lc {
-	CORE::lc $_[1];
+	CORE::lc($_[1] || '');
 }
 
 sub cli_hostintro {
@@ -991,6 +990,8 @@ sub kicked {
 	# MOTD
 	375 => \&ignore,
 	372 => \&ignore,
+	396 => \&ignore,
+	412 => \&ignore,
 	376 => sub { # end of MOTD
 		my $net = shift;
 		my $curr = $half_out[$$net][0];
@@ -1081,9 +1082,10 @@ sub kicked {
 		$gecos =~ s/^\d+\s//; # remove server hop count
 		my @out = $net->cli_hostintro($_[7], $_[4], $_[5], $gecos);
 		my %mode;
+		$mode{owner} = 1 if $_[8] =~ /\~/;
+		$mode{admin} = 1 if $_[8] =~ /\&/;
+		$mode{admin} = 1 if $_[8] =~ /\!/;
 		$mode{op} = 1 if $_[8] =~ /\@/;
-		$mode{admin} = 1 if $_[8] =~ /&/;
-		$mode{owner} = 1 if $_[8] =~ /~/;
 		$mode{halfop} = 1 if $_[8] =~ /\%/;
 		$mode{voice} = 1 if $_[8] =~ /\+/;
 		push @out, +{

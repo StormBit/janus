@@ -1,7 +1,7 @@
 # Copyright (C) 2007-2009 Daniel De Graaf
 # Modificiations (C) 2011 - 2014 Brenton Edgar Scott
 # Released under the GNU Affero General Public License v3
-package Server::TS6;
+package Server::Elemental;
 use Nick;
 use Modes;
 use Util::BaseUID;
@@ -48,6 +48,7 @@ sub nick_msg {
 
 sub nicklen {
 	50
+    #Set to the absolute maximum to avoid hard-coding a too low value
 }
 
 sub lc {
@@ -66,10 +67,10 @@ sub intro {
 	$net->SUPER::intro(@param);
 	my $sep = $Janus::septag;
 	Setting::set(tagsep => $net, '|') if $sep eq '/';
-	my $use_owner = CORE::lc($net->cparam('use_owner') || 'no');
-	my $use_admin = CORE::lc($net->cparam('use_admin') || 'no');
-	if ($use_owner eq 'yes') { $net->module_add('OWNER', 1); };
-	if ($use_admin eq 'yes') { $net->module_add('ADMIN', 1); };
+	my $use_owner = CORE::lc($net->cparam('use_owner') || 'yes');
+	my $use_admin = CORE::lc($net->cparam('use_admin') || 'yes');
+	unless ($use_owner eq 'no') { $net->module_add('OWNER', 1); };
+	unless ($use_admin eq 'no') { $net->module_add('ADMIN', 1); };
 
 	#my $ircd = $net->cparam('ircd');
 	# Let's default to charybdis/ratbox features!

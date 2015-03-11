@@ -1,5 +1,5 @@
 # Copyright (C) 2007-2009 Daniel De Graaf
-# Modificiations (C) 2011 - 2012 Brenton Edgar Scott
+# Modificiations (C) 2011 - 2014 Brenton Edgar Scott
 # Released under the GNU Affero General Public License v3
 package Server::Unreal;
 use Nick;
@@ -140,7 +140,7 @@ my $textip_table = join '', 'A'..'Z','a'..'z', 0 .. 9, '+/';
 sub nicklen { 30 }
 
 sub lc {
-	CORE::lc $_[1];
+	CORE::lc $_[1] || '';
 }
 
 sub request_nick {
@@ -378,7 +378,8 @@ sub nick_msg {
 		$msg->[0] = $about;
 	}
 	if ($_[2] =~ /\./) {
-		Log::warn_in($net, 'numeric', @_);
+		# Why do we care about numerics we don't use?
+		# Log::warn_in($net, 'numeric', @_);
 		return ();
 	}
 	my $dst = $net->nick($_[2]) or return ();
@@ -1152,11 +1153,14 @@ $moddef{CORE} = {
 
 		if ($net->auth_should_send) {
 			my $server = $net->cparam('linkname');
+			my $netname = $net->cparam('netname');
 			my $pass = $net->cparam('sendpass');
 			my $num = $net->numeric_for($net);
+			my $systime = time();
 			$rawout[$$net] = "PASS :$pass\r\n".
 				'PROTOCTL NOQUIT TOKEN NICKv2 CLK NICKIP SJOIN SJOIN2 SJ3 VL NS UMODE2 TKLEXT SJB64'.
-				"\r\nSERVER $server 1 :U2309-hX6eE-$num Janus Network Link\r\n".$rawout[$$net];
+				"\r\nSERVER $server 1 :U2309-hX6eE-$num Janus Network Link\r\n".
+				"NETINFO 100 $systime 2309 * 0 0 0 :$netname\r\n".$rawout[$$net];
 		}
 		Log::info_in($net, "Server $_[2] [\@$snum] added from $src");
 		$servers[$$net]{$name} = {
@@ -1314,6 +1318,7 @@ $moddef{CORE} = {
 	SAJOIN => \&ignore,
 	SAPART => \&ignore,
 	SILENCE => \&ignore,
+	SMONITOR => \&ignore,
 	SVSJOIN => \&ignore,
 	SVSLUSERS => \&ignore,
 	SVSNOOP => \&ignore,

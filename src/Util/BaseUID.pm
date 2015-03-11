@@ -1,5 +1,5 @@
 # Copyright (C) 2007-2009 Daniel De Graaf
-# Modificiations (C) 2011 - 2012 Brenton Edgar Scott
+# Modificiations (C) 2011 - 2014 Brenton Edgar Scott
 # Released under the GNU Affero General Public License v3
 package Util::BaseUID;
 use LocalNetwork;
@@ -31,7 +31,7 @@ sub mynick {
 	}
 	my $nick = $uids[$$net]{uc $name};
 	unless ($nick) {
-		Log::warn_in($net, "UID '$name' does not exist; ignoring");
+		Log::debug_in($net, "UID '$name' does not exist; ignoring");
 		return undef;
 	}
 	if ($nick->homenet() ne $net) {
@@ -50,7 +50,7 @@ sub nick {
 		$name = $nick2uid[$$net]{$name} || $name;
 	}
 	return $uids[$$net]{uc $name} if $uids[$$net]{uc $name};
-	Log::warn_in($net, "UID '$name' does not exist; ignoring") unless $_[2];
+	Log::debug_in($net, "UID '$name' does not exist; ignoring") unless $_[2];
 	undef;
 }
 
@@ -137,8 +137,8 @@ sub _request_nick {
 	if ($tagged) {
 		my $tagsep = $Janus::septag;
 		my $tagtest = Setting::get(tagsep => $net);
-		$tagsep = $tagtest if $tagtest eq '_';
-		$reqnick =~ s/\//\|/g if $reqnick =~ /\//g && $tagtest eq '_';
+		$tagsep = $tagtest if $tagtest eq '|';
+		$reqnick =~ s/\//\|/g if $reqnick =~ /\//g && $tagtest eq '|';
 		my $tag = $tagsep . $nick->homenet()->name();
 		my $i = 0;
 		$given = substr($reqnick, 0, $maxlen - length $tag) . $tag;
@@ -157,7 +157,7 @@ sub request_newnick {
 	my($net, $nick, $reqnick, $tagged) = @_;
 	my($given,$glc) = _request_nick(@_);
 	my $uid = $net->next_uid($nick->homenet());
-	Log::debug_in($net, "Registering nick #$$nick as uid $uid with nick $given");
+	Log::debug_in($net, "Registering #$$nick as uid $uid with nick $given");
 	$uids[$$net]{uc $uid} = $nick;
 	$nick2uid[$$net]{$glc} = $uid;
 	$gid2uid[$$net]{$nick->gid()} = $uid;

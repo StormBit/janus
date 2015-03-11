@@ -1,5 +1,5 @@
 # Copyright (C) 2007-2009 Daniel De Graaf
-# Modificiations (C) 2011 - 2012 Brenton Edgar Scott
+# Modificiations (C) 2011 - 2014 Brenton Edgar Scott
 # Released under the GNU Affero General Public License v3
 package Server::InspMods;
 use Carp;
@@ -212,7 +212,7 @@ mdef 'm_httpd.so';
 mdef 'm_httpd_stats.so';
 mdef 'm_ident.so';
 
-mdef 'm_invisible.so', umode => { Q => '' };
+# TODO kill link on m_invisible being loaded
 mdef 'm_inviteexception.so', cmode => { I => 'l_invex' };
 
 mdef 'm_janus.so', acts => {

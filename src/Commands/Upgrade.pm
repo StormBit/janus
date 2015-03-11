@@ -1,5 +1,5 @@
 # Copyright (C) 2007-2009 Daniel De Graaf
-# Modificiations (C) 2011 - 2012 Brenton Edgar Scott
+# Modifications (C) 2011 - 2014 Brenton Edgar Scott
 # Released under the GNU Affero General Public License v3
 package Commands::Upgrade;
 use strict;
@@ -64,7 +64,7 @@ Event::command_add({
 		};
 		weaken($final->{dst});
 		Util::Exec::bgrun(sub {
-			system 'wget --output-document janus.tgz http://github.com/Trixarian/janus/tarball/master' and return 1;
+			system 'wget --output-document janus.tgz http://github.com/GLolol/janus2/tarball/master' and return 1;
 			system 'tar --extract --gzip --strip 1 --file janus.tgz' and return 1;
 			system 'rm janus.tgz' and return 1;
 			return 0;

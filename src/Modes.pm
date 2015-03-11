@@ -1,5 +1,5 @@
 # Copyright (C) 2007-2009 Daniel De Graaf
-# Modificiations (C) 2011 - 2012 Brenton Edgar Scott
+# Modificiations (C) 2011 - 2014 Brenton Edgar Scott
 # Released under the GNU Affero General Public License v3
 package Modes;
 use Persist;
@@ -118,13 +118,13 @@ sub from_irc {
 			if ($txt =~ s/^t(\d+)/r/) {
 				$arg = $1;
 			} else {
-				Log::warn_in($net, "Invalid mode text $txt for mode $_ in network $net");
+			#	Log::warn_in($net, "Invalid mode text $txt for mode $_ in network $net");
 				next;
 			}
 		} elsif ($type eq 'r') {
 			$arg = 1;
 		} else {
-			Log::warn_in($net, "Invalid mode text $txt for mode $_ in network $net");
+		#	Log::warn_in($net, "Invalid mode text $txt for mode $_ in network $net");
 			next;
 		}
 		next if 3 > length $txt;

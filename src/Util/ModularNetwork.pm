@@ -1,5 +1,5 @@
 # Copyright (C) 2007-2009 Daniel De Graaf
-# Modificiations (C) 2011 - 2012 Brenton Edgar Scott
+# Modificiations (C) 2011 - 2014 Brenton Edgar Scott
 # Released under the GNU Affero General Public License v3
 package Util::ModularNetwork;
 use Persist 'LocalNetwork';
@@ -137,7 +137,8 @@ sub umode2txt {
 	my($net,$um,$ok) = @_;
 	my $t = $umode2txt[$$net]{$um};
 	if (!defined $t && !$ok) {
-		Log::warn_in($net, "Unknown umode '$um'");
+	# Redundency is fun :D
+	#	Log::warn_in($net, "Unknown umode '$um'");
 		$t = '';
 	}
 	$t;

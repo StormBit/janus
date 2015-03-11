@@ -1,5 +1,5 @@
 # Copyright (C) 2007-2009 Daniel De Graaf
-# Modificiations (C) 2011 - 2012 Brenton Edgar Scott
+# Modificiations (C) 2011 - 2014 Brenton Edgar Scott
 # Released under the GNU Affero General Public License v3
 package Nick;
 use strict;
@@ -151,7 +151,8 @@ return true if the nick has the given umode
 sub has_mode {
 	my $nick = $_[0];
 	my $b = $umodebit{$_[1]} or do {
-		warn "Unknown umode $_[1]";
+		# This is a bit redundent...
+		# warn "Unknown umode $_[1]";
 		return 0;
 	};
 	return $mode[$$nick] & $b;
